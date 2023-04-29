@@ -121,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-VIDEO_ROOT=os.path.join('uploadvideofile','videosdatabase')
+VIDEO_ROOT=os.path.join(BASE_DIR,'uploadvideofile','videosdatabase')
 
 VIDEO_URL='/video/'
 
