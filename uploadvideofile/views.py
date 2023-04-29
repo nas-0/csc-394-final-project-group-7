@@ -8,9 +8,7 @@ def index(request):
 
 def upload(request):
     if request.method=='POST':
-            uploaded_video_file= request.FILES['video']
-            print(uploaded_video_file.name)
-            print(uploaded_video_file.size)
+            uploaded_video_file=request.FILES["video"]
             fs=FileSystemStorage()
             fs.save(uploaded_video_file.name,uploaded_video_file)
     return render(request,'upload.html')
