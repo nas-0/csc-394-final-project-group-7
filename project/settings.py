@@ -121,6 +121,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+VIDEO_ROOT=os.path.join('uploadvideofile','videosdatabase')
+
+VIDEO_URL='/video/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

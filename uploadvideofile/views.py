@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from django.core.files.storage import FileSystemStorage
 
 
 def index(request):
@@ -8,7 +8,9 @@ def index(request):
 
 def upload(request):
     if request.method=='POST':
-            uploaded_file= request.FILES['video']
-            print(uploaded_file.name)
-            print(uploaded_file.size)
+            uploaded_video_file= request.FILES['video']
+            print(uploaded_video_file.name)
+            print(uploaded_video_file.size)
+            fs=FileSystemStorage()
+            fs.save(uploaded_video_file.name,uploaded_video_file)
     return render(request,'upload.html')
