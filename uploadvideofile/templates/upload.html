@@ -5,3 +5,7 @@
         <input type="file" id="video" name="video" accept="video/*">
         <button type="sumbit">Upload file</button>
 </form>
+{% if url %}
+        <p>Video URL: <a href="{{ url }}">{{ url }}</a></p>
+    
+{% endif %}
