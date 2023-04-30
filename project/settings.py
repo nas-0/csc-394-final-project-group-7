@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,3 +130,8 @@ MEDIA_URL='/video/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GOOGLE_API_KEY=('AIzaSyDO_y1mjNCt2ca26RBNkAZPlzwurR5-5Og')
+API_SERVICE_NAME = 'youtube'
+API_VERSION = 'v3'
+CHANNEL_ID=('UC0FLNPPAKPntIZDdjNRdJLQ')
