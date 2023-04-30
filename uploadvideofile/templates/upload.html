@@ -3,6 +3,7 @@
         {% csrf_token %}
         <label for="video">Choose a video file:</label>
         <input type="file" id="video" name="video" accept="video/*">
+        {{ form.as_p }}
         <button type="sumbit">Upload file</button>
 </form>
 {% if url %}
