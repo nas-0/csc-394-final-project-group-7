@@ -6,4 +6,6 @@ import re
 import googleapiclient.discovery
 import googleapiclient.errors
 
+from main.models import Video
+
 
