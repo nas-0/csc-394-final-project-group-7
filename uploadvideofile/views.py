@@ -12,6 +12,10 @@ from django.shortcuts import render
 # requests.
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
+def index(request):
+    context = {}
+    return render(request, 'index.html', context)
+
 def get_access_token(authorization_code):
     """
     This function retrieves an access token from the Google API using the authorization code obtained
