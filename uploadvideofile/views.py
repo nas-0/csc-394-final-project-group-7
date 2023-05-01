@@ -15,7 +15,7 @@ from googleapiclient.http import MediaFileUpload
 
 CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
-REDIRECT_URI=[]
+REDIRECT_URI=['https://mutiplatformsvideosupload.net/uploadvideofile/upload/']
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 def get_access_token(authorization_code):
