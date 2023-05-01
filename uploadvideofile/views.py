@@ -30,7 +30,11 @@ def get_access_token(authorization_code):
         'redirect_uri': settings.GOOGLE_REDIRECT_URI,
         'grant_type': 'authorization_code'
     }
-    response = requests.post(url, data=data)
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+    response = requests.post('https://api.vimeo.com/oauth/access_token', data=data, headers=headers)
     print(response.content)
     access_token = response.json()['access_token']
     response.raise_for_status()
