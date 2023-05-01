@@ -33,7 +33,9 @@ def get_access_token(authorization_code):
         access_token = response.json()['access_token']
         return access_token
     else:
-        return None
+        access_token = response.json()['access_token']
+    print(access_token)
+    return access_token
 
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
