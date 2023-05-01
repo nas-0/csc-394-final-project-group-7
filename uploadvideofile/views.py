@@ -20,7 +20,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
-REDIRECT_URI = []
+REDIRECT_URI = ['https://18.223.209.108/uploadvideofile/upload/']
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 def index(request):
