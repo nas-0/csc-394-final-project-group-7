@@ -47,47 +47,47 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         url = fs.url(name)
-        authorization_code = request.POST.get('authorization_code')
-        access_token = get_access_token(authorization_code)
-        if access_token:
-            headers = {
-                'Authorization': 'Bearer ' + access_token,
-                'Content-Type': 'multipart/related; boundary=foo_bar_baz',
-            }
-            data = {
-                'metadata': '{"name":"' + name + '"}',
-                'file': file,
-            }
-            response = requests.post(url, headers=headers, files=data)
-            # Print the response content
-            print(response.content)
-            # Upload the video to YouTube
-            try:
-                credentials = Credentials.from_authorized_user_file(
-                    os.path.join(settings.BASE_DIR, 'credentials.json')
-                )
-                youtube = build('youtube', 'v3', credentials=credentials)
-                request = youtube.videos().insert(
-                    part='snippet,status',
-                    body={
-                        'snippet': {
-                            'title': uploaded_video_file.name,
-                            'description': 'Video uploaded from Django',
-                        },
-                        'status': {
-                            'privacyStatus': 'private',  # You can change this to 'public' or 'unlisted'
-                        }
+        access_token = get_access_token(request.POST.get('authorization_code'))
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'multipart/related; boundary=foo_bar_baz',
+        }
+        data = {
+            'metadata': '{"name":"' + name + '"}',
+            'file': file,
+        }
+        response = requests.post(url, headers=headers, files=data)
+
+        # Print the response content
+        print(response.content)
+        # Upload the video to YouTube
+        try:
+            credentials = Credentials.from_authorized_user_file(
+                os.path.join(settings.BASE_DIR, 'credentials.json')
+            )
+            youtube = build('youtube', 'v3', credentials=credentials)
+            request = youtube.videos().insert(
+                part='snippet,status',
+                body={
+                    'snippet': {
+                        'title': uploaded_video_file.name,
+                        'description': 'Video uploaded from Django',
                     },
-                    media_body=MediaFileUpload(
-                        os.path.join(settings.MEDIA_ROOT, name),
-                        chunksize=-1,
-                        resumable=True
-                    )
+                    'status': {
+                        'privacyStatus': 'private',  # You can change this to 'public' or 'unlisted'
+                    }
+                },
+                media_body=MediaFileUpload(
+                    os.path.join(settings.MEDIA_ROOT, name),
+                    chunksize=-1,
+                    resumable=True
                 )
-                response = request.execute()
-                youtube_video_url = f'https://www.youtube.com/watch?v={response["id"]}'
-                context['youtube_video_url'] = youtube_video_url
-            except HttpError as e:
-                print(f'An HTTP error {e.resp.status} occurred: {e.content}')
+            )
+            response = request.execute()
+            youtube_video_url = f'https://www.youtube.com/watch?v={response["id"]}'
+            context['youtube_video_url'] = youtube_video_url
+        except HttpError as e:
+            print(f'An HTTP error {e.resp.status} occurred: {e.content}')
 
     return render(request, 'upload.html', context)
+
