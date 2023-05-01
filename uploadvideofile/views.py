@@ -1,5 +1,8 @@
 import os
 from django.http import HttpResponse
+from django.http import HttpResponse
+import requests
+import json
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -25,7 +28,18 @@ def upload(request):
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         url = fs.url(name)
         context['url'] = fs.url(name)
-
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'multipart/related; boundary=foo_bar_baz',
+        }
+        data = {
+            'metadata': '{"name":"' + file.name + '"}',
+            'file': file,
+        }
+        response = requests.post(url, headers=headers, files=data)
+        
+        # Print the response content
+        print(response.content)
         # Upload the video to YouTube
         try:
             credentials = Credentials.from_authorized_user_file(
