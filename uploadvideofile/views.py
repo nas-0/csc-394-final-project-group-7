@@ -7,18 +7,39 @@ from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import time 
+from google.oauth2 import service_account
+from google.auth.transport.requests import Request
+
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 from django.conf import settings
 
-
+CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
+CLIENT_SECRET = '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'
+REDIRECT_URI = 'https://mutiplatformsvideosupload.net/oauth2callback'
+SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
 
+def get_access_token(authorization_code):
+    credentials = None
+    if 'credentials' in request.session:
+        credentials = Credentials.from_authorized_user_info(request.session['credentials'], SCOPES)
+    if not credentials or not credentials.valid:
+        if credentials and credentials.expired and credentials.refresh_token:
+            credentials.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
+            credentials = flow.run_local_server(port=0)
+        request.session['credentials'] = credentials.to_authorized_user_info()
+    return credentials.token
+
+
 def upload(request):
+    access_token = get_access_token(authorization_code)
     context = {}
     if request.method == 'POST':
         # Get the uploaded video file
