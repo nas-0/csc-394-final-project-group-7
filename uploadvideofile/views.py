@@ -25,18 +25,6 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
 
-def get_access_token(authorization_code):
-    credentials = None
-    if 'credentials' in request.session:
-        credentials = Credentials.from_authorized_user_info(request.session['credentials'], SCOPES)
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
-            credentials = flow.fetch_token(authorization_response=request.build_absolute_uri(), authorization_response=authorization_code)
-        request.session['credentials'] = credentials.to_authorized_user_info()
-    return credentials.token
 
 
 def upload(request):
