@@ -1,12 +1,11 @@
 import os
-from django.http import HttpResponse
-from django.http import HttpResponse
 import requests
 import json
+import time 
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-import time 
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 
@@ -15,6 +14,9 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 from django.conf import settings
+from google_auth_oauthlib.flow import InstalledAppFlow
+
+
 
 CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
@@ -33,7 +35,7 @@ def get_access_token(authorization_code):
             credentials.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
-            credentials = flow.run_local_server(port=0)
+            credentials = flow.fetch_token(authorization_response=request.build_absolute_uri(), authorization_response=authorization_code)
         request.session['credentials'] = credentials.to_authorized_user_info()
     return credentials.token
 
