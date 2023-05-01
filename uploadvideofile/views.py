@@ -22,8 +22,8 @@ def get_access_token(authorization_code):
     This function retrieves an access token from the Google API using the authorization code obtained
     during the OAuth 2.0 flow.
     """
-    url = 'https://accounts.google.com/o/oauth2/v2/auth'
-    token_endpoint = 'https://oauth2.googleapis.com/token'
+
+    token_endpoint = 'https://accounts.google.com/o/oauth2/token'
     token_data = {
         'code': authorization_code,
         'client_id': settings.GOOGLE_CLIENT_ID,
