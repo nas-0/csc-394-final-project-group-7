@@ -14,7 +14,6 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.errors import HttpError
 from googleapiclient.discovery import build
 from django.conf import settings
-from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 
