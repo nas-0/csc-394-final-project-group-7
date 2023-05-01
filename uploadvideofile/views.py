@@ -16,6 +16,33 @@ from googleapiclient.discovery import build
 from django.conf import settings
 
 
+CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
+CLIENT_SECRET = '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'
+REDIRECT_URI=[]
+SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
+
+def get_access_token(authorization_code):
+    # Build the request data
+    data = {
+        'code': authorization_code,
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
+        'redirect_uri': REDIRECT_URI,
+        'grant_type': 'authorization_code'
+    }
+
+    # Send a POST request to exchange the authorization code for an access token
+    response = requests.post('https://oauth2.googleapis.com/token', data=data)
+
+    # Parse the response and extract the access token
+    if response.ok:
+        response_data = json.loads(response.content)
+        access_token = response_data['access_token']
+        return access_token
+    else:
+        print('Error exchanging authorization code for access token:')
+        print(response.content)
+        return None
 
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
@@ -23,6 +50,7 @@ def index(request):
 
 
 def upload(request):
+    authorization_code = request.GET.get('code')
     access_token = get_access_token(authorization_code)
     context = {}
     if request.method == 'POST':
@@ -32,7 +60,6 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         url = fs.url(name)
-        context['url'] = fs.url(name)
         headers = {
             'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'multipart/related; boundary=foo_bar_baz',
