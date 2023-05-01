@@ -109,3 +109,4 @@ def upload(request):
                 context['message'] = 'An error occurred while uploading the video.'
         else:
             context['message']='An error occurred while getting the access token.'
+    return render(request, 'upload.html', context)
