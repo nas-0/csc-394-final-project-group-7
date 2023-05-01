@@ -35,7 +35,7 @@ def get_access_token(authorization_code):
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-    response = requests.post(token_endpoint, data=data, headers=headers)
+    response = requests.post(token_endpoint, data=token_data, headers=headers)
     print(response.content)
     print(response.text)
 
