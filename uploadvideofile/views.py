@@ -23,7 +23,7 @@ def get_access_token(authorization_code):
     during the OAuth 2.0 flow.
     """
     url = 'https://accounts.google.com/o/oauth2/v2/auth'
-    token_endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
+    token_endpoint = 'https://oauth2.googleapis.com/token'
     token_data = {
         'code': authorization_code,
         'client_id': settings.GOOGLE_CLIENT_ID,
@@ -45,7 +45,7 @@ def get_access_token(authorization_code):
     response_data = response.json()
     access_token = response_data.get('access_token')
     response.raise_for_status()
-    
+
     try:
         response_data = response.json()
     except json.JSONDecodeError as e:
