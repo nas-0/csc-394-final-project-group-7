@@ -2,6 +2,8 @@ from django.db import models
 
 class Media(models.Model):
 
+    
+
     class Meta: 
         db_table = 'media'
         verbose_name_plural = 'media'
