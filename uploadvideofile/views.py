@@ -7,6 +7,7 @@ import requests
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 # This variable specifies the Google OAuth 2.0 scopes that this application
 # requests.
@@ -40,7 +41,7 @@ def get_access_token(authorization_code):
     else:
         return None
 
-
+@csrf_exempt
 def upload_to_youtube(title, description, tags, category, privacy_status, file_path, access_token):
     """
     This function uploads a video to YouTube using the YouTube API.
