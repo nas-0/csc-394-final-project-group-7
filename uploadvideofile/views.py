@@ -35,6 +35,10 @@ def get_access_token(authorization_code):
         'grant_type': 'authorization_code'
     }
     response = requests.post(url, data=data)
+    print(response.content)
+    access_token = response.json()['access_token']
+    response.raise_for_status()
+
     if response.status_code == 200:
         access_token = response.json()['access_token']
         return access_token
