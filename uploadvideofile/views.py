@@ -41,7 +41,6 @@ def get_access_token(authorization_code):
     else:
         return None
 
-@csrf_exempt
 def upload_to_youtube(title, description, tags, category, privacy_status, file_path, access_token):
     """
     This function uploads a video to YouTube using the YouTube API.
@@ -79,6 +78,7 @@ def upload_to_youtube(title, description, tags, category, privacy_status, file_p
         return None
 
 
+@csrf_exempt
 def upload(request):
     context = {}
     if request.method == 'POST':
