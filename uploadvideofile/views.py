@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
+import time 
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.errors import HttpError
@@ -20,6 +21,8 @@ def upload(request):
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         url = fs.url(name)
         context['url'] = fs.url(name)
+
+        time.sleep(10)
         
         # get the path of the last uploaded file
         media_root = fs.location
