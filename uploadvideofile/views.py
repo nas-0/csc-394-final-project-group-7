@@ -31,10 +31,12 @@ def get_access_token(authorization_code):
     response = requests.post(url, data=data)
     if response.status_code == 200:
         access_token = response.json()['access_token']
+        response.json()
         return access_token
     else:
         access_token = response.json()['access_token']
     print(access_token)
+    response.json()
     return access_token
 
 def index(request):
