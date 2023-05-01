@@ -36,6 +36,8 @@ def get_access_token(authorization_code):
 
     response = requests.post('https://api.vimeo.com/oauth/access_token', data=data, headers=headers)
     print(response.content)
+    print(response.text)
+
     access_token = response.json()['access_token']
     response.raise_for_status()
 
