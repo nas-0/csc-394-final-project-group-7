@@ -22,27 +22,17 @@ REDIRECT_URI=[]
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 def get_access_token(authorization_code):
-    # Build the request data
-    data = {
-        'code': authorization_code,
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'redirect_uri': REDIRECT_URI,
-        'grant_type': 'authorization_code'
-    }
-
-    # Send a POST request to exchange the authorization code for an access token
-    response = requests.post('https://oauth2.googleapis.com/token', data=data)
-
-    # Parse the response and extract the access token
-    if response.ok:
-        response_data = json.loads(response.content)
-        access_token = response_data['access_token']
-        return access_token
-    else:
-        print('Error exchanging authorization code for access token:')
-        print(response.content)
-        return None
+    credentials = None
+    if 'credentials' in request.session:
+        credentials = Credentials.from_authorized_user_info(request.session['credentials'], SCOPES)
+    if not credentials or not credentials.valid:
+        if credentials and credentials.expired and credentials.refresh_token:
+            credentials.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
+            credentials = flow.run_local_server(port=0)
+        request.session['credentials'] = credentials.to_authorized_user_info()
+    return credentials.token
 
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
