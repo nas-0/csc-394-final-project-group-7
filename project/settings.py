@@ -137,3 +137,7 @@ API_VERSION = 'v3'
 CHANNEL_ID=('UC0FLNPPAKPntIZDdjNRdJLQ')
 
 
+GOOGLE_CLIENT_ID = '925184637596-o20botqnn8clfjik14jghstn37jd04oh.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET= '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'
+GOOGLE_REDIRECT_URI='https://mutiplatformsvideosupload.net/uploadvideofile/upload/'
+

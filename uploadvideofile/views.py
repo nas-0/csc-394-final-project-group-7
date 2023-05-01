@@ -16,6 +16,8 @@ from googleapiclient.http import MediaFileUpload
 
 
 
+
+
 def index(request):
     return HttpResponse("You are at the website to upload YT video on the youtube platform")
 
