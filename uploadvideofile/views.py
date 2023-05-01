@@ -23,7 +23,8 @@ def get_access_token(authorization_code):
     during the OAuth 2.0 flow.
     """
     url = 'https://accounts.google.com/o/oauth2/v2/auth'
-    data = {
+    token_endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
+    token_data = {
         'code': authorization_code,
         'client_id': settings.GOOGLE_CLIENT_ID,
         'client_secret': settings.GOOGLE_CLIENT_SECRET,
@@ -34,11 +35,15 @@ def get_access_token(authorization_code):
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-    response = requests.post('https://api.vimeo.com/oauth/access_token', data=data, headers=headers)
+    response = requests.post(token_endpoint, data=data, headers=headers)
     print(response.content)
     print(response.text)
 
-    access_token = response.json()['access_token']
+    response.raise_for_status()
+
+    # Parse the response and extract the access token
+    response_data = response.json()
+    access_token = response_data.get('access_token')
     response.raise_for_status()
 
     if response.status_code == 200:
@@ -87,6 +92,8 @@ def upload_to_youtube(title, description, tags, category, privacy_status, file_p
 @csrf_exempt
 def upload(request):
     context = {}
+    
+
     if request.method == 'POST':
         # Get the uploaded video file
         uploaded_video_file = request.FILES['video']
@@ -95,7 +102,7 @@ def upload(request):
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         video_path = fs.path(name)
         # Get the authorization code from the POST data
-        authorization_code = request.POST.get('authorization_code')
+        authorization_code = request.POST.get('code')
         # Get an access token using the authorization code
         access_token = get_access_token(authorization_code)
         if access_token:
