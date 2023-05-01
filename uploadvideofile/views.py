@@ -50,8 +50,6 @@ def index(request):
 
 
 def upload(request):
-    authorization_code = request.GET.get('code')
-    access_token = get_access_token(authorization_code)
     context = {}
     if request.method == 'POST':
         # Get the uploaded video file
@@ -60,16 +58,17 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         url = fs.url(name)
+        access_token = get_access_token(request.POST.get('authorization_code'))
         headers = {
             'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'multipart/related; boundary=foo_bar_baz',
         }
         data = {
-            'metadata': '{"name":"' + file.name + '"}',
+            'metadata': '{"name":"' + name + '"}',
             'file': file,
         }
         response = requests.post(url, headers=headers, files=data)
-        
+
         # Print the response content
         print(response.content)
         # Upload the video to YouTube
