@@ -45,12 +45,23 @@ def get_access_token(authorization_code):
     response_data = response.json()
     access_token = response_data.get('access_token')
     response.raise_for_status()
+    
+    try:
+        response_data = response.json()
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+        return None
 
+    if 'access_token' not in response_data:
+        print(f"No access token found in response: {response_data}")
+        return None
+    
     if response.status_code == 200:
         access_token = response.json()['access_token']
         return access_token
     else:
         return None
+    
 
 def upload_to_youtube(title, description, tags, category, privacy_status, file_path, access_token):
     """
