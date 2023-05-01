@@ -1,25 +1,16 @@
 import os
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
 import requests
-import json
-import time 
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-import google.auth
-from google.oauth2 import service_account
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from googleapiclient.errors import HttpError
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+from django.shortcuts import render
 
-
-
-
-
-def index(request):
-    return HttpResponse("You are at the website to upload YT video on the youtube platform")
+# This variable specifies the Google OAuth 2.0 scopes that this application
+# requests.
+SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 def get_access_token(authorization_code):
     """
@@ -46,6 +37,43 @@ def get_access_token(authorization_code):
         return None
 
 
+def upload_to_youtube(title, description, tags, category, privacy_status, file_path, access_token):
+    """
+    This function uploads a video to YouTube using the YouTube API.
+    """
+    try:
+        # Authorize the API request.
+        youtube = googleapiclient.discovery.build('youtube', 'v3', credentials=access_token)
+
+        # Define the video resource properties that are being set.
+        body = {
+            'snippet': {
+                'title': title,
+                'description': description,
+                'tags': tags,
+                'categoryId': category,
+            },
+            'status': {
+                'privacyStatus': privacy_status
+            }
+        }
+
+        # Call the API's videos.insert method to create and upload the video.
+        request = youtube.videos().insert(
+            part='snippet,status',
+            body=body,
+            media_body=googleapiclient.http.MediaFileUpload(file_path)
+        )
+        response = request.execute()
+
+        # Return the ID of the newly uploaded video.
+        return response['id']
+
+    except googleapiclient.errors.HttpError as error:
+        print(f'An error occurred: {error}')
+        return None
+
+
 def upload(request):
     context = {}
     if request.method == 'POST':
@@ -60,31 +88,20 @@ def upload(request):
         # Get an access token using the authorization code
         access_token = get_access_token(authorization_code)
         if access_token:
-            # Build the API request
-            url = 'https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status'
-            headers = {
-                'Authorization': 'Bearer ' + access_token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-            body = {
-                'snippet': {
-                    'title': request.POST.get('title'),
-                    'description': request.POST.get('description'),
-                    'tags': request.POST.get('tags'),
-                    'categoryId': request.POST.get('category')
-                },
-                'status': {
-                    'privacyStatus': request.POST.get('privacy')
-                }
-            }
             # Upload the video to YouTube
-            with open(video_path, 'rb') as f:
-                response = requests.post(url, headers=headers, json=body, data=f)
-            if response.status_code == 200:
+            video_id = upload_to_youtube(
+                request.POST.get('title'),
+                request.POST.get('description'),
+                request.POST.get('tags'),
+                request.POST.get('category'),
+                request.POST.get('privacy'),
+                video_path,
+                access_token
+            )
+            if video_id:
                 context['message'] = 'Video uploaded successfully!'
+                context['video_url'] = f'https://www.youtube.com/watch?v={video_id}'
             else:
                 context['message'] = 'An error occurred while uploading the video.'
         else:
-            context['message'] = 'Could not retrieve access token.'
-    return render(request, 'upload.html', context)
+            context['message']='An error occurred while getting the access token.'
