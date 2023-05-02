@@ -36,6 +36,8 @@ def upload(request):
         keywords = "Testing, testing1"
         category = "28"
         privacy_status = "private"
-        command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
+        #command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
+        command = f"/bin/bash /path/to/upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
+
         subprocess.call(command, shell=True)
     return render(request, 'upload.html', context)
