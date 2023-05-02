@@ -13,6 +13,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from googleapiclient.http import MediaFileUpload
+import httplib2
 
 
 # This variable specifies the Google OAuth 2.0 scopes that this application
@@ -49,6 +50,8 @@ def upload_to_youtube(video_path, video_title, video_description):
     credentials = service_account.Credentials.from_service_account_file(
         os.path.join(settings.BASE_DIR, 'uploadvideofile/service_account.json'),
         scopes=['https://www.googleapis.com/auth/youtube.upload'])
+    http = httplib2.Http()
+    http.debuglevel = 1
 
     # Create a YouTube API client object
     youtube = build('youtube', 'v3', credentials=credentials)
