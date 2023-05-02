@@ -27,7 +27,7 @@ import httplib2
 
 #Define your keys from the developer portal
 consumer_key = 'Z289lzwBpJEFCxTjbX4jiNH0K'
-consumer_secret = 'aYFWOADQcunk25Gcu2yVM9LrUNQDlOljpvQmqz3CxCSg8uVSMC'
+consumer_secret_key = 'aYFWOADQcunk25Gcu2yVM9LrUNQDlOljpvQmqz3CxCSg8uVSMC'
 
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
