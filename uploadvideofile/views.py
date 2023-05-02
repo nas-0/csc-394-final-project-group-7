@@ -41,6 +41,5 @@ def upload(request):
         category = "28"
         privacy_status = "private"
         command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
         subprocess.call(command, shell=True)
     return render(request, 'upload.html', context)
