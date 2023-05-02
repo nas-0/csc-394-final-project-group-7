@@ -89,7 +89,7 @@ def upload(request):
 
         tweet = {'status': 'hello world', 'media_ids': media_id}
         post_url = 'https://api.twitter.com/1.1/statuses/update.json'    
-        post_resp = requests.post(post_url,params=tweet,headers=image_headers)
+        post_resp = requests.post(post_url,params=tweet,headers=video_headers)
     return render(request, 'upload.html', context)
 
 
