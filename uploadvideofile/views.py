@@ -12,6 +12,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from googleapiclient.http import MediaFileUpload
+
 
 # This variable specifies the Google OAuth 2.0 scopes that this application
 # requests.
