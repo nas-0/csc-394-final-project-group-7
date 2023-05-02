@@ -68,7 +68,8 @@ def upload(request):
         access_token = auth_resp.json()['access_token']
 
        
-        data = open(video_path).read()
+        file = open('/home/ubuntu/hw/uploadvideofile/', name)
+        data = file.read()
         resource_url='https://upload.twitter.com/1.1/media/upload.json'
         upload_video={
                 'media':data,
