@@ -38,6 +38,8 @@ def upload(request):
         privacy_status = "private"
         #command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
         command = f"/bin/bash /path/to/upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
+        output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        print(output.decode())
 
         subprocess.call(command, shell=True)
     return render(request, 'upload.html', context)
