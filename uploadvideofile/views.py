@@ -27,7 +27,7 @@ def upload(request):
         # Save the video file to the file system
         fs = FileSystemStorage()
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
-        video_path = fs.path(name)
+        video_path2 = fs.path(name)
         # Get the authorization code from the POST data
         # Get an access token using the authorization code
         video_path = "/home/ubuntu/hw/uploadvideofile/TESTING2.mp4"
@@ -37,7 +37,8 @@ def upload(request):
         category = "28"
         privacy_status = "private"
         #command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
-        command = f"/bin/bash /path/to/upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
+        command = command = ['./upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+        subprocess.call(command)
         output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         print(output.decode())
 
