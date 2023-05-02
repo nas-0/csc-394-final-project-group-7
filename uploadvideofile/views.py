@@ -37,7 +37,7 @@ def upload(request):
         category = "28"
         privacy_status = "private"
         #command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
-        command = command = ['/home/ubuntu/hw/uploadvideofile/upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+        command = ['/home/ubuntu/hw/uploadvideofile/upload_video.sh', video_path, title, description, keywords, category, privacy_status]
         subprocess.call(command)
         output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         print(output.decode())
