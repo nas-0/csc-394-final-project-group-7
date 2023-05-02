@@ -45,5 +45,4 @@ def upload(request):
         output = subprocess.check_output(command, stderr=subprocess.STDOUT)
         print(output.decode())
 
-        subprocess.call(command, shell=True)
     return render(request, 'upload.html', context)
