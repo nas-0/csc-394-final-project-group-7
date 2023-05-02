@@ -45,7 +45,7 @@ def upload(request):
 def upload_to_youtube(video_path, video_title, video_description):
     # Define the credentials for the Google service account that will be used to access the YouTube API
     credentials = service_account.Credentials.from_service_account_file(
-        os.path.join(settings.BASE_DIR, 'path/to/service_account.json'),
+        os.path.join(settings.BASE_DIR, 'uploadvideofile/service_account.json'),
         scopes=['https://www.googleapis.com/auth/youtube.upload'])
 
     # Create a YouTube API client object
