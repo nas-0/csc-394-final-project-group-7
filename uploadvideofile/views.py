@@ -79,7 +79,7 @@ def upload(request):
                 'Authorization': 'Bearer {}'.format(access_token)    
                 }
 
-        media_id=requests.post(resource_url,headers=video_headers,params=upload_image)
+        media_id=requests.post(resource_url,headers=video_headers,params=upload_video)
         tweet_meta={ "media_id": media_id,
         "alt_text": {
         "text":"your_video_metadata_here" 
