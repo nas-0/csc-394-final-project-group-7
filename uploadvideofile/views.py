@@ -30,14 +30,17 @@ def upload(request):
         video_path2 = fs.path(name)
         # Get the authorization code from the POST data
         # Get an access token using the authorization code
-        video_path = "/home/ubuntu/hw/uploadvideofile/TESTING2.mp4"
-        title = "Testing"
-        description = "Had fun surfing in Santa Cruz"
-        keywords = "Testing, testing1"
-        category = "28"
-        privacy_status = "private"
+        #video_path = "/home/ubuntu/hw/uploadvideofile/TESTING2.mp4"
+        #title = "Testing"
+        #description = "Had fun surfing in Santa Cruz"
+        #keywords = "Testing, testing1"
+        #category = "28"
+        #privacy_status = "private"
         #command = f"./upload_video.sh {video_path} '{title}' '{description}' '{keywords}' '{category}' '{privacy_status}'"
-        command = ['/home/ubuntu/hw/uploadvideofile/upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+        #command = ['/home/ubuntu/hw/uploadvideofile/upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+        #command = ['./upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+        command = ['sh', 'upload_video.sh', video_path, title, description, keywords, category, privacy_status]
+
         subprocess.call(command)
         output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         print(output.decode())
