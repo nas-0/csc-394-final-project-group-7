@@ -21,10 +21,6 @@ def index(request):
 @csrf_exempt
 def upload(request):
     context = {}
-    
-
-
-
     if request.method == 'POST':
         # Get the uploaded video file
         uploaded_video_file = request.FILES['video']
@@ -34,7 +30,7 @@ def upload(request):
         video_path = fs.path(name)
         # Get the authorization code from the POST data
         # Get an access token using the authorization code
-        video_path = "/home/ubuntu/hw/uploadvideofile/videosdatabase/TESTING2.mp4"
+        video_path = "/home/ubuntu/hw/uploadvideofile/TESTING2.mp4"
         title = "Testing"
         description = "Had fun surfing in Santa Cruz"
         keywords = "Testing, testing1"
