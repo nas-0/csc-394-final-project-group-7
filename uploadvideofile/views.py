@@ -5,6 +5,11 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 import requests
+
+import numpy as np
+import tweepy
+import requests
+import base64
 from time import sleep
 
 from google.oauth2 import service_account
@@ -17,6 +22,12 @@ from django.views.decorators.csrf import csrf_exempt
 from googleapiclient.http import MediaFileUpload
 import httplib2
 
+
+
+
+#Define your keys from the developer portal
+consumer_key = 'Z289lzwBpJEFCxTjbX4jiNH0K'
+consumer_secret = 'aYFWOADQcunk25Gcu2yVM9LrUNQDlOljpvQmqz3CxCSg8uVSMC'
 
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
@@ -36,56 +47,49 @@ def upload(request):
         video_path = fs.path(name)
         sleep(5)
 
-        # Upload the video file to YouTube
-        video_title = request.POST.get('title')  # Get the title of the video from the form
-        video_description = request.POST.get('description')  # Get the description of the video from the form
-        video_url = upload_to_youtube(video_path, video_title, video_description)
+        #Reformat the keys and encode them
+        key_secret = '{}:{}'.format(consumer_key, consumer_secret_key).encode('ascii')
+        #Transform from bytes to bytes that can be printed
+        b64_encoded_key = base64.b64encode(key_secret)
+        #Transform from bytes back into Unicode
+        b64_encoded_key = b64_encoded_key.decode('ascii')
 
-        # Add the video URL to the context dictionary
-        context['video_url'] = video_url
-        
+        base_url = 'https://api.twitter.com/'
+        auth_url = '{}oauth2/token'.format(base_url)
+        auth_headers = {
+                'Authorization': 'Basic {}'.format(b64_encoded_key),
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                }
+        auth_data = {
+                        'grant_type': 'client_credentials'
+                    }
+        auth_resp = requests.post(auth_url, headers=auth_headers, data=auth_data)
+        print(auth_resp.status_code)
+        access_token = auth_resp.json()['access_token']
+
+       
+        data = open(video_path).read()
+        resource_url='https://upload.twitter.com/1.1/media/upload.json'
+        upload_video={
+                'media':data,
+                'media_category':'tweet_video'}
+    
+        video_headers = {
+                'Authorization': 'Bearer {}'.format(access_token)    
+                }
+
+        media_id=requests.post(resource_url,headers=video_headers,params=upload_image)
+        tweet_meta={ "media_id": media_id,
+        "alt_text": {
+        "text":"your_video_metadata_here" 
+                        }}
+        metadata_url = 'https://upload.twitter.com/1.1/media/metadata/create.json'    
+        metadata_resp = requests.post(metadata_url,params=tweet_meta,headers=auth_data)
+
+        tweet = {'status': 'hello world', 'media_ids': media_id}
+        post_url = 'https://api.twitter.com/1.1/statuses/update.json'    
+        post_resp = requests.post(post_url,params=tweet,headers=image_headers)
     return render(request, 'upload.html', context)
 
-def upload_to_youtube(video_path, video_title, video_description):
-    credentials = service_account.Credentials.from_service_account_file(
-        os.path.join(settings.BASE_DIR, 'uploadvideofile/service_account.json'),
-        scopes=['https://www.googleapis.com/auth/youtube.upload'])
-    http = httplib2.Http()
-    http.debuglevel = 1
 
-    youtube = build('youtube', 'v3', credentials=credentials)
 
-    try:
-        # Create a resource for the video that will be uploaded
-        video = {
-            'snippet': {
-                'title': video_title,
-                'description': video_description,
-            },
-            'status': {
-                'privacyStatus': 'public',
-            }
-        }
-
-        # Call the YouTube API to upload the video file
-        print(f'Uploading video file: {video_path}')
-        response = youtube.videos().insert(
-            part='snippet,status',
-            body=video,
-            media_body=MediaFileUpload(video_path)
-        ).execute()
-        print('Video file uploaded successfully')
-
-        # Get the URL of the uploaded video
-
-         
-        video_url = f'https://www.youtube.com/watch?v={response["id"]}'
-        print(f'Video uploaded successfully: {video_url}')
-
-        # Return the URL of the uploaded video
-        return video_url
-
-    except HttpError as error:
-        # Handle any errors that occur during the upload process
-        print(f'An error occurred: {error}')
-        return None
