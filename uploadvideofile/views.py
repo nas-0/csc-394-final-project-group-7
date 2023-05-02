@@ -5,6 +5,7 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 import requests
+import time
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -34,6 +35,7 @@ def upload(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_video_file.name, uploaded_video_file)
         video_path = fs.path(name)
+        sleep(5)
 
         # Upload the video file to YouTube
         video_title = request.POST.get('title')  # Get the title of the video from the form
@@ -42,7 +44,7 @@ def upload(request):
 
         # Add the video URL to the context dictionary
         context['video_url'] = video_url
-
+        
     return render(request, 'upload.html', context)
 
 def upload_to_youtube(video_path, video_title, video_description):
