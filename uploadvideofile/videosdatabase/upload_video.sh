@@ -1,2 +1,8 @@
 #!/bin/bash
-python upload_video.py /home/ubuntu/hw/uploadvideofile/videosdatabase/TESTING2.mp4 'Testing' 'Had fun surfing in Santa Cruz' 'Testing, testing1' '28' 'private'
+python upload_video.py /
+--file="/home/ubuntu/hw/uploadvideofile/videosdatabase/TESTING2.mp4" 
+--title='Testing'
+--description='Had fun surfing in Santa Cruz'
+--keywords='Testing, testing1'
+--category='28'
+--privacyStatus='private'
