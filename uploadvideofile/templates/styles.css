@@ -1,0 +1,17 @@
+body{ background-color:#aa56da; color:#fdfdfd; font-family:Garamond; font-size: 20px;}
+
+.video{
+    background-color:#301a3d;
+    color: #fff;
+    top:50%;
+    border:none;
+    border-radius:15px;
+}
+
+.submit{
+    background-color:#301a3d;
+    color: #fff;
+    top:50%;
+    border:none;
+    border-radius:15px;
+}

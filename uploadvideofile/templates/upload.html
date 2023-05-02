@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title>Clip Uploader (Demo)</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+<body>
 <h2>Upload</h2>
 
 {% if youtube_video_url %}
@@ -7,14 +16,17 @@
 
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="vdieo">Choose a video file:</label>
-        <input type="file" id="video" name="video" accept="video/*">
-        <button type="sumbit">Upload file</button>
+        <label for="video">Choose a video file:</label>
+        <input type="file" id="video" name="video" class="video" accept="video/*">
+        <button type="sumbit" class="submit">Upload file</button>
 </form>
 {% if url %}
         <p>Video URL: <a href="{{ url }}">{{ url }}</a></p>
     
 {% endif %}
+
+</body>
+</html>
 
 
 
