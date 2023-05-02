@@ -72,14 +72,19 @@ def upload_to_youtube(video_path, video_title, video_description):
         }
 
         # Call the YouTube API to upload the video file
+        print(f'Uploading video file: {video_path}')
         response = youtube.videos().insert(
             part='snippet,status',
             body=video,
             media_body=MediaFileUpload(video_path)
         ).execute()
+        print('Video file uploaded successfully')
 
         # Get the URL of the uploaded video
+
+         
         video_url = f'https://www.youtube.com/watch?v={response["id"]}'
+        print(f'Video uploaded successfully: {video_url}')
 
         # Return the URL of the uploaded video
         return video_url
