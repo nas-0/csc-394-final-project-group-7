@@ -41,7 +41,7 @@ def upload(request):
         #command = ['./upload_video.sh', video_path, title, description, keywords, category, privacy_status]
         command = ['sh', 'upload_video.sh', video_path, title, description, keywords, category, privacy_status]
 
-        subprocess.call(command)
+        subprocess.call(command, shell=True)
         output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         print(output.decode())
 
