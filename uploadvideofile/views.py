@@ -47,7 +47,7 @@ def upload(request):
         video_path = fs.path(name)
         sleep(5)
 
-        cmd = ['python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
+        cmd = ['/hw/venv/bin/python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
 
         subprocess.run(cmd)
 
