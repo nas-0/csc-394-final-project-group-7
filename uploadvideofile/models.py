@@ -8,7 +8,7 @@ class Media(models.Model):
             raise ValidationError(u'Error message')
 
     class Meta: 
-        db_table = 'uploadvideofile_media'
+        db_table = 'media'
         verbose_name_plural = 'media'
         
     #video = models.FileField(upload_to='videosdatabase')
@@ -17,8 +17,6 @@ class Media(models.Model):
     video_id=models.CharField(max_length=100)
     title=models.CharField(max_length=100)
     duration=models.CharField(max_length=100)
-    iframe= models.CharField(max_length=100)
-    url = models.URLField()
 
     is_active=models.BooleanField(default=True)
 
