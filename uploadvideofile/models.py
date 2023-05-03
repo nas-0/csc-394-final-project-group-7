@@ -3,9 +3,6 @@ from django.forms import ValidationError
 
 class Media(models.Model):
 
-    def validate_file_extension(value):
-        if value.file.content_type != 'video/*':
-            raise ValidationError(u'Error message')
 
     class Meta: 
         db_table = 'uploadvideofile_media'
