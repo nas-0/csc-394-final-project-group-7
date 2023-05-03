@@ -47,6 +47,8 @@ def upload(request):
             fs = FileSystemStorage()
             name = fs.save(uploaded_video_file.name, uploaded_video_file)
             url = fs.url(name)
+            cmd = 'python "/home/ubuntu/hw/uploadvideofile/upload_video.py" --file="/home/ubuntu/hw/uploadvideofile/TESTING2.mp4"'
+            os.system(cmd)
         else:
             form = UploadForm()
     return render(request, 'upload.html', {'form': form})
