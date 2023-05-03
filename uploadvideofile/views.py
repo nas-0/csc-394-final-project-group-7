@@ -47,13 +47,7 @@ def upload(request):
         video_path = fs.path(name)
         sleep(5)
 
-        cmd = ['python', 'upload_video.py',
-       f'--file=uploadvideofile/TESTING2.mp4',
-       '--title=Testing',
-       '--description=Had fun surfing in Santa Cruz',
-       '--keywords=Testing,testing1',
-       '--category=28',
-       '--privacyStatus=private']
+        cmd = ['python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
 
         subprocess.run(cmd)
 
