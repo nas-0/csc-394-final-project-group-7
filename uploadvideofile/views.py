@@ -38,18 +38,12 @@ def index(request):
 
 @csrf_exempt
 def upload(request):
-    if request.method == 'POST':
-        form = UploadForm(request.POST, request.FILES)
+    form = UploadForm(request.POST, request.FILES)
+    if request.method=='POST':
         if form.is_valid():
             form.save()
-            uploaded_video_file = request.FILES["video"]
-            fs = FileSystemStorage()
-            name = fs.save(uploaded_video_file.name, uploaded_video_file)
-            url = fs.url(name)
-            context = {'url': url}
-            return render(request, 'upload.html', context)
-    else:
-        form = UploadForm()
+        else:
+            form = UploadForm()
     return render(request, 'upload.html', {'form': form})
 
 

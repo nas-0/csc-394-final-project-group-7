@@ -52,3 +52,20 @@ def upload_to_youtube(video_path, video_title, video_description):
         # Handle any errors that occur during the upload process
         print(f'An error occurred: {error}')
         return None
+
+
+
+
+
+
+
+if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            uploaded_video_file = request.FILES["video"]
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_video_file.name, uploaded_video_file)
+            url = fs.url(name)
+            context = {'url': url}
+            return render(request, 'upload.html', context)
