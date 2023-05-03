@@ -11,7 +11,7 @@
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="sumbit">Upload file</button>
+        <button type="submit">Upload file</button>
 </form>
 
 {% if video_url %}
