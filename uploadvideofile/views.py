@@ -11,7 +11,8 @@ import tweepy
 import requests
 import base64
 from time import sleep
-
+from uploadvideofile.models import Media
+from uploadvideofile.forms import UploadForm
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -37,23 +38,19 @@ def index(request):
 
 @csrf_exempt
 def upload(request):
-    context = {}
     if request.method == 'POST':
-        # Get the uploaded video file
-        uploaded_video_file = request.FILES['video']
-        # Save the video file to the file system
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_video_file.name, uploaded_video_file)
-        video_path = fs.path(name)
-        sleep(5)
-
-        cmd = ['/home/ubuntu/hw/venv/bin/python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
-        print("Executing command:", cmd)
-        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-    print("Command executed successfully")
-
-    return render(request, 'upload.html', context)
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            uploaded_video_file = request.FILES["video"]
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_video_file.name, uploaded_video_file)
+            url = fs.url(name)
+            context = {'url': url}
+            return render(request, 'upload.html', context)
+    else:
+        form = UploadForm()
+    return render(request, 'upload.html', {'form': form})
 
 
 

@@ -10,6 +10,7 @@
 
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.as_p }}
         <label for="vdieo">Choose a video file:</label>
         <input type="file" id="video" name="video" accept="video/*">
         <button type="sumbit">Upload file</button>
