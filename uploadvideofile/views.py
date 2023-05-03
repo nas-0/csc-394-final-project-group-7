@@ -48,8 +48,10 @@ def upload(request):
         sleep(5)
 
         cmd = ['/home/ubuntu/hw/venv/bin/python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
+        print("Executing command:", cmd)
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        subprocess.run(cmd)
+    print("Command executed successfully")
 
     return render(request, 'upload.html', context)
 
