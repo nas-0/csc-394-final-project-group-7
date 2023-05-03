@@ -47,6 +47,7 @@ def upload(request):
         video_path = fs.path(name)
         sleep(5)
 
+<<<<<<< Updated upstream
         #Reformat the keys and encode them
         key_secret = '{}:{}'.format(consumer_key, consumer_secret_key).encode('ascii')
         #Transform from bytes to bytes that can be printed
@@ -66,6 +67,13 @@ def upload(request):
         auth_resp = requests.post(auth_url, headers=auth_headers, data=auth_data)
         print(auth_resp.status_code)
         access_token = auth_resp.json()['access_token']
+=======
+        cmd = ['/home/ubuntu/hw/venv/bin/python', 'upload_video.py', '--file=/home/ubuntu/hw/uploadvideofile/TESTING2.mp4']
+        print("Executing command:", cmd)
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+    print("Command executed successfully")
+>>>>>>> Stashed changes
 
        
         file = open(video_path, 'rb')
