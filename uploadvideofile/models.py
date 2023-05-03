@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 class Media(models.Model):
 
@@ -7,7 +8,7 @@ class Media(models.Model):
             raise ValidationError(u'Error message')
 
     class Meta: 
-        db_table = 'media'
+        db_table = 'uploadvideofile_media'
         verbose_name_plural = 'media'
         
     #video = models.FileField(upload_to='videosdatabase')
