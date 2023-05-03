@@ -47,49 +47,16 @@ def upload(request):
         video_path = fs.path(name)
         sleep(5)
 
-        #Reformat the keys and encode them
-        key_secret = '{}:{}'.format(consumer_key, consumer_secret_key).encode('ascii')
-        #Transform from bytes to bytes that can be printed
-        b64_encoded_key = base64.b64encode(key_secret)
-        #Transform from bytes back into Unicode
-        b64_encoded_key = b64_encoded_key.decode('ascii')
+        cmd = ['python', 'upload_video.py',
+       f'--file=uploadvideofile/TESTING2.mp4',
+       '--title=Testing',
+       '--description=Had fun surfing in Santa Cruz',
+       '--keywords=Testing,testing1',
+       '--category=28',
+       '--privacyStatus=private']
 
-        base_url = 'https://api.twitter.com/'
-        auth_url = '{}oauth2/token'.format(base_url)
-        auth_headers = {
-                'Authorization': 'Basic {}'.format(b64_encoded_key),
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                }
-        auth_data = {
-                        'grant_type': 'client_credentials'
-                    }
-        auth_resp = requests.post(auth_url, headers=auth_headers, data=auth_data)
-        print(auth_resp.status_code)
-        access_token = auth_resp.json()['access_token']
+        subprocess.run(cmd)
 
-       
-        file = open(video_path, 'rb')
-        data = file.read()
-        resource_url='https://upload.twitter.com/1.1/media/upload.json'
-        upload_video={
-                'media':data,
-                'media_category':'tweet_video'}
-    
-        video_headers = {
-                'Authorization': 'Bearer {}'.format(access_token)    
-                }
-
-        media_id=requests.post(resource_url,headers=video_headers,params=upload_video)
-        tweet_meta={ "media_id": media_id,
-        "alt_text": {
-        "text":"your_video_metadata_here" 
-                        }}
-        metadata_url = 'https://upload.twitter.com/1.1/media/metadata/create.json'    
-        metadata_resp = requests.post(metadata_url,params=tweet_meta,headers=auth_data)
-
-        tweet = {'status': 'hello world', 'media_ids': media_id}
-        post_url = 'https://api.twitter.com/1.1/statuses/update.json'    
-        post_resp = requests.post(post_url,params=tweet,headers=video_headers)
     return render(request, 'upload.html', context)
 
 
