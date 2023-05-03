@@ -40,6 +40,7 @@ def index(request):
 def upload(request):
     form = UploadForm(request.POST, request.FILES)
     if request.method=='POST':
+        form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
         else:
