@@ -4,7 +4,7 @@ from django.forms import ValidationError
 class Media(models.Model):
 
     def validate_file_extension(value):
-        if value.file.content_type == 'videsdadao/*':
+        if value.file.content_type == 'THISISBUG/*':
             raise ValidationError(u'Error message')
 
     class Meta: 
