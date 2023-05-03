@@ -43,6 +43,10 @@ def upload(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            uploaded_video_file = request.FILES["video"]
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_video_file.name, uploaded_video_file)
+            url = fs.url(name)
         else:
             form = UploadForm()
     return render(request, 'upload.html', {'form': form})
