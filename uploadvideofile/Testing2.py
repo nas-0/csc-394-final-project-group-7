@@ -1,0 +1,1 @@
+cmd = ['C:/path/to/python', 'upload_video.py',       '--file=uploadvideofile/TESTING2.mp4',       '--title=Testing',       '--description=Had fun surfing in Santa Cruz',       '--keywords=Testing,testing1',       '--category=28',       '--privacyStatus=private']
