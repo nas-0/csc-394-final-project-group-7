@@ -156,7 +156,6 @@ API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 CHANNEL_ID=('UC0FLNPPAKPntIZDdjNRdJLQ')
 
-MEDIA_URL = 'https://mutiplatformsvideosupload.net/'
 
 
 GOOGLE_CLIENT_ID = '925184637596-i8hgl4s7q7a0qqasfepfoo2vcv9dtfke.apps.googleusercontent.com'
