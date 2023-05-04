@@ -3,14 +3,14 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Upload file</button>
-        {% if url %}
-             <p>File uploaded at: <a href="{{ url }}">{{ url }}</a></p>
+        {% if context.url %}
+            <p>URL: {{ context.url }}</p>
         {% endif %}
 </form>
-
-{% if url %}
-    <p>File uploaded at: <a href="{{ url }}">{{ url }}</a></p>
+{% if context.url %}
+    <p>URL: {{ context.url }}</p>
 {% endif %}
+
 
 
 
