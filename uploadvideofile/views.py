@@ -57,7 +57,7 @@ def upload(request):
             uploaded_video_file = request.FILES["video"]
             fs = FileSystemStorage()
             name = fs.save(uploaded_video_file.name, uploaded_video_file)
-            context ['url'] = "https://mutiplatformsvideosupload.net/"+fs.url(name)
+            context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
             form = UploadForm(request.POST, request.FILES)
         else:
             form = UploadForm()
