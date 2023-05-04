@@ -8,7 +8,9 @@
         {% endif %}
 </form>
 
-
+{% if url %}
+    <p>File uploaded at: <a href="{{ url }}">{{ url }}</a></p>
+{% endif %}
 
 
 

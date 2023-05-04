@@ -42,8 +42,7 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 
 
 def index(request):
-    context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
 
 
     
@@ -59,9 +58,9 @@ def upload(request):
             fs = FileSystemStorage()
             name = fs.save(uploaded_video_file.name, uploaded_video_file)
             context ['url'] = fs.url(name)
-            
+            form = UploadForm(request.POST, request.FILES)
         else:
             form = UploadForm()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'upload.html', {'form': form, 'context': context})
 
 
