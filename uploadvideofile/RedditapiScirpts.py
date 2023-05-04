@@ -9,8 +9,8 @@ access_token = 'your_access_token_here'
 
 # Video post parameters
 subreddit = 'videos'
-title = 'My Awesome Video'
-video_url = 'https://www.example.com/my_video.mp4'
+title = 'TESTING VIDEO 1'
+video_url = 'http://18.223.209.108/video/TESTING2%20-%20Made%20with%20Clipchamp_V3mJsvm.mp4'
 
 # Headers for API request
 headers = {
