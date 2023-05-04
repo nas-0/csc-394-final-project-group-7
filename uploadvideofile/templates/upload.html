@@ -1,22 +1,14 @@
 <h2>Upload</h2>
-
-{% if youtube_video_url %}
-    <p>Your video has been uploaded to YouTube. Here's the link: <a href="{{ youtube_video_url }}" target="_blank">{{ youtube_video_url }}</a></p>
-{% endif %}
-
-{% if video_url %}
-    <p>Video URL: <a href="{{ video_url }}">{{ video_url }}</a></p>
-{% endif %}
-
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Upload file</button>
 </form>
-
-{% if video_url %}
-    <p>Video URL: <a href="{{ video_url }}">{{ video_url }}</a></p>
+{% if url %}
+    <p>File uploaded at: <a href="{{ url }}">{{ url }}</a></p>
 {% endif %}
+
+
 
 
 
