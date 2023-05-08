@@ -55,7 +55,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join('uploadvideofile', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'project/templates'), os.path.join('uploadvideofile', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
