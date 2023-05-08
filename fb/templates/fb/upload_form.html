@@ -1,0 +1,15 @@
+<!-- {% for upload in uploads %}
+    <h3>Title: {{upload.video_title}}</h3>
+    <h4>Description: {{upload.video_description}}</h4>
+    <h5>File Location: {{upload.file_path}}</h5>
+    <hr><br><br>
+{% endfor %} -->
+
+<h2>Upload Your Video</h2>
+<form method="post">
+    <table>
+        {{form}}
+    </table>
+    {% csrf_token %}
+    <a href="{% url 'post' %}"><button type="submit" > Upload</button></a>
+</form>
