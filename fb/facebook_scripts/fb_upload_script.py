@@ -20,7 +20,6 @@ def post_to_facebook(title, desc, group_access_token, file_path,):
     # Make the initial request to start the upload
     response = requests.post(url, data=data)
     response_json = response.json()
-    print("herre")
     # Check for any errors in the response
     if "error" in response_json:
         print(response_json["error"]["message"])
@@ -46,7 +45,6 @@ def post_to_facebook(title, desc, group_access_token, file_path,):
     # Make the request to upload the video chunks
     response = requests.post(url, data=data, files=files)
     response_json = response.json()
-    print("ohere")
     # Check for any errors in the response
     if "error" in response_json:
         print(response_json["error"]["message"])
@@ -64,7 +62,6 @@ def post_to_facebook(title, desc, group_access_token, file_path,):
     # Make the request to finish the video upload
     response = requests.post(url, data=data)
     response_json = response.json()
-    print("here")
     # Check for any errors in the response
     if "error" in response_json:
         print(response_json["error"]["message"])
