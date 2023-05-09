@@ -1,37 +1,23 @@
-import requests
-import json
+import praw 
 
-# Reddit API endpoint for submitting a post
-api_endpoint = 'https://oauth.reddit.com/api/submit'
+reddit = praw.Reddit(client_id='MZ9N_VToT15PkC38Ij7JsQ',
+                     client_secret='evbH7PflRspt2_Uj_SyJxvNoTwaJhg',
+                     username='ForsoftwareTesting',
+                     password='Password876',
+                     user_agent="sdasd/1.0.0 (by /u/ForsoftwareTesting)")
+            # create a Reddit instance by providing the required credentials
 
-# User access token
-access_token = 'your_access_token_here'
 
-# Video post parameters
-subreddit = 'videos'
-title = 'TESTING VIDEO 1'
-video_url = 'http://18.223.209.108/video/TESTING2%20-%20Made%20with%20Clipchamp_V3mJsvm.mp4'
+            # define the subreddit where you want to upload the video
+subreddit_name = 'test34243242'
+subreddit = reddit.subreddit(subreddit_name)
 
-# Headers for API request
-headers = {
-    'User-Agent': 'My App/1.0.0',
-    'Authorization': f'Bearer {access_token}',
-    'Content-Type': 'application/json'
-}
+            # define the video link and the title of the post
+video_link = 'https://mutiplatformsvideosupload.net/video/TESTING2%20-%20Made%20with%20Clipchamp_3HB7EI1.mp4'
+title = 'Testing/may 8,2023'
 
-# Body of API request
-payload = {
-    'sr': subreddit,
-    'title': title,
-    'url': video_url,
-    'kind': 'link'
-}
+            # create the submission object
+submission = subreddit.submit(title=title, url=video_link)
 
-# Send the API request to post the video
-response = requests.post(api_endpoint, headers=headers, data=json.dumps(payload))
-
-# Check the response status code
-if response.status_code == 200:
-    print('Video posted successfully!')
-else:
-    print(f'Error posting video: {response.status_code} {response.reason}')
+            # print the link to the newly created post
+print(submission.url)

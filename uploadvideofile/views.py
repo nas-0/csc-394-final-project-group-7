@@ -18,13 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
-
-
-#Define your keys from the developer portal
-CLIENT_SECRET_FILE = '/home/ubuntu/hw/uploadvideofile/client_secrets.json'
-API_NAME = 'youtube'
-API_VERSION = 'v3'
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+import praw
 
 
 
