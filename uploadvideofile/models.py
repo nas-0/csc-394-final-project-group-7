@@ -8,8 +8,9 @@ from django.contrib.auth.models import User
 
 class Uploader(models.Model):
     name = models.CharField(max_length=30)
-    account = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
+    reddit_user = models.CharField(max_length=30)
+    reddit_password = models.CharField(max_length=30)
+    fb_access_key = models.CharField(null=True, max_length=100)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, primary_key=False)
 
     def __str__(self) -> str:
@@ -23,8 +24,10 @@ class Media(models.Model):
         
     video = models.FileField(upload_to='videosdatabase') #, validators=[validate_file_extension])
     timestamp = models.DateTimeField(auto_now_add=True)
-    video_id=models.CharField(max_length=100)
-    title=models.CharField(max_length=100)   
+    video_id = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    #filepath = models.URLField()   -- This might work if needed
     uploader = models.ForeignKey(Uploader, null=True, on_delete=models.CASCADE) 
 
    
