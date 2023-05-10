@@ -20,7 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import  static
 
 urlpatterns = [
-    path("uploadvideofile/", include("uploadvideofile.urls")),   
+    path("uploadvideofile/", include("uploadvideofile.urls")),
+    path('fb/', include('fb.urls')),
     path('admin/', admin.site.urls),]
 
 if  settings.DEBUG:
