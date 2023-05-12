@@ -60,7 +60,7 @@ def upload(request):
             # print the link to the newly created post
             #print(submission.url)
             desc='This testing propose'
-            a_key='EAANC9YHYLpkBABeudhfoNZBGJd1VKfD8KRmbrNS4G09iuUCTayW4Bfp5TsxSXWC8viuumUw4UrRPzTmXzVWhrX7leBgHUwvyZBnfEskkTOnKtuElZB06PR6ZBkCnwOZCZBgae7QsFxBtEZCog262qBlAxwi122SfaTtZCaMYH7qUxSfDc0y7cSEZCoFPW0dZCICaAZD'
+            a_key='EAANC9YHYLpkBAMLdebhsTHcudCDq3tscC6Kf7xKseG3rRZAuDP36QaZArkLFxewWoOUbBhwRttFxBjZCrIs9ixqrvAzUtvgJRyS6ZANZAeS9IFv3weaOJ22wJYKD7ZBGOoEpBDJXhdMWqPrjhy9cWzqZBsG2QrU2Vh4rblyLt1vQowf5N5sZAZCmSdsCoIXTD34ZCdu6EWdbjWgS4NlQv9uguY'
             fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
             post_to_facebook(title, desc, a_key, fpath)
 
