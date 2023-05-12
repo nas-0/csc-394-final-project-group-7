@@ -52,17 +52,17 @@ def upload(request):
 
             # define the video link and the title of the post
             #video_link = context ['url']
-            title = request.POST.get('title')
+            #title = request.POST.get('title')
 
             # create the submission object
             #submission = subreddit.submit(title=title, url=video_link)
 
             # print the link to the newly created post
             #print(submission.url)
-            desc='This testing propose'
-            a_key='EAANC9YHYLpkBAMLdebhsTHcudCDq3tscC6Kf7xKseG3rRZAuDP36QaZArkLFxewWoOUbBhwRttFxBjZCrIs9ixqrvAzUtvgJRyS6ZANZAeS9IFv3weaOJ22wJYKD7ZBGOoEpBDJXhdMWqPrjhy9cWzqZBsG2QrU2Vh4rblyLt1vQowf5N5sZAZCmSdsCoIXTD34ZCdu6EWdbjWgS4NlQv9uguY'
-            fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
-            post_to_facebook(title, desc, a_key, fpath)
+            #desc='This testing propose'
+            #a_key=''
+            #fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+            #post_to_facebook(title, desc, a_key, fpath)
 
         else:
             form = UploadForm()
