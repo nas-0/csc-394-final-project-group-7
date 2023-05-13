@@ -122,6 +122,18 @@ button[type="submit"]:hover {
     </div>
   </div>
 
+<!--<h2>Upload</h2>
+<form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload file</button>
+</form>
+{% if url %}
+        <p>Video URL: <a href="{{ url }}">{{ url }}</a></p>
+    
+{% endif %}
+-->
+
 
   <script>
     const tabs = document.querySelectorAll(".nav a");
