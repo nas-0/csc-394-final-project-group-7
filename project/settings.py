@@ -76,7 +76,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join('uploadvideofile', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'project/templates'), os.path.join('uploadvideofile', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,6 +146,10 @@ STATIC_URL = 'static/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'uploadvideofile','videosdatabase')
 
 MEDIA_URL='/video/'
+
+LOGIN_REDIRECT_URL = "/uploadvideofile"
+LOGOUT_REDIRECT_URL = "/uploadvideofile"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -9,17 +9,23 @@ from uploadvideofile.forms import UploadForm
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
+
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
+from django.contrib.auth.decorators import login_required
 import praw
 
 
 def index(request):
     return render(request, 'index.html')
 
+@login_required
+def videos(request):
+    return render(request, 'videos.html')
 
     
 @csrf_exempt
+@login_required
 def upload(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
