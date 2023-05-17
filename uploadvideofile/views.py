@@ -11,12 +11,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
-
-
-
-
 import praw
-
 
 
 def index(request):
