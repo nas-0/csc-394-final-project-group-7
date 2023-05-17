@@ -21,6 +21,10 @@ import praw
 def index(request):
     return render(request, 'index.html')
 
+@login_required
+def videos(request):
+    return render(request, 'videos.html')
+
     
 @csrf_exempt
 @login_required
