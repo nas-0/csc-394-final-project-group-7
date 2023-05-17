@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 #       raise ValidationError(u'Error message')
 
 class Uploader(models.Model):
-    name = models.CharField(max_length=30)
-    reddit_user = models.CharField(max_length=30)
-    reddit_password = models.CharField(max_length=30)
-    fb_access_key = models.CharField(null=True, max_length=100)
+    name = models.CharField(max_length=30, default='')
+    reddit_user = models.CharField(max_length=30, default='')
+    reddit_password = models.CharField(max_length=30, default='')
+    fb_access_key = models.CharField(max_length=100, default='')
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, primary_key=False)
 
     def __str__(self) -> str:
@@ -24,10 +24,9 @@ class Media(models.Model):
         
     video = models.FileField(upload_to='videosdatabase') #, validators=[validate_file_extension])
     timestamp = models.DateTimeField(auto_now_add=True)
-    video_id = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    #filepath = models.URLField()   -- This might work if needed
+    video_id = models.CharField(max_length=100, default='')
+    title = models.CharField(max_length=100, default='')
+    description = models.TextField(default='')
     uploader = models.ForeignKey(Uploader, null=True, on_delete=models.CASCADE) 
 
    

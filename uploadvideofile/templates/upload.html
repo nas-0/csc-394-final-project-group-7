@@ -96,8 +96,8 @@ button[type="submit"]:hover {
       {{ form.video_id }}
       <label for="{{ form.title.id_for_label }}">Title:</label>
       {{ form.title }}
-      <label for="{{ form.duration.id_for_label }}">Duration:</label>
-      {{ form.duration }}
+      <label for="{{ form.description.id_for_label }}">Description:</label>
+      {{ form.description }}
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -122,17 +122,6 @@ button[type="submit"]:hover {
     </div>
   </div>
 
-<!--<h2>Upload</h2>
-<form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload file</button>
-</form>
-{% if url %}
-        <p>Video URL: <a href="{{ url }}">{{ url }}</a></p>
-    
-{% endif %}
--->
 
 
   <script>

@@ -15,6 +15,7 @@ from .facebook_scripts.fb_upload_script import post_to_facebook
 
 from django.contrib.auth.decorators import login_required
 
+import praw
 
 
 def index(request):
