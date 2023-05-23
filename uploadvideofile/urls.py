@@ -10,5 +10,6 @@ urlpatterns = [
     path("videos/", views.videos, name="videos"),
     path("upload/", views.upload, name="upload"),
     path("signup/", SignUpView.as_view(), name="signup"),
+    path("edituploader/", views.edituploader, name="edituploader"),
     ]
     

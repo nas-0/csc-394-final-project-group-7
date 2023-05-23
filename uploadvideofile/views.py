@@ -1,9 +1,9 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 
-from uploadvideofile.models import Media
-from uploadvideofile.forms import UploadForm
+from uploadvideofile.models import Media, Uploader
+from uploadvideofile.forms import UploadForm, UploaderForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -27,6 +27,21 @@ def index(request):
 def videos(request):
     return render(request, 'videos.html')
 
+@login_required
+def edituploader(request):
+    my_record = Uploader.objects.get(user=request.user)
+    form = UploaderForm(instance=my_record)
+    if request.method=='POST':
+
+            form = UploaderForm(request.POST, instance=my_record)
+            if form.is_valid():
+                form.save()
+                return redirect('/uploadvideofile')
+            else:
+                form = UploadForm()
+    return render(request,'edituploader.html', {'form': form}) #context)
+     
+     
 
 @login_required
 def upload(request):
@@ -39,6 +54,7 @@ def upload(request):
                 obj = form.save(commit=False)
                 obj.uploader = request.user
                 obj.save()
+                return redirect('/uploadvideofile/videos')
                 #form.save()
             else:
                 form = UploadForm()
