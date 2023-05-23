@@ -41,9 +41,9 @@ def upload(request):
             form = UploadForm(request.POST, request.FILES)
             reddit = praw.Reddit(client_id='MZ9N_VToT15PkC38Ij7JsQ',
                      client_secret='evbH7PflRspt2_Uj_SyJxvNoTwaJhg',
-                     username='ForsoftwareTesting',
-                     password='Password876',
-                     user_agent="sdasd/1.0.0 (by /u/ForsoftwareTesting)")
+                     username='softwaretesting7',
+                     password='Software7',
+                     user_agent="sdasd/1.0.0 (by /u/softwaretesting7)")
             # create a Reddit instance by providing the required credentials
 
 
@@ -60,10 +60,10 @@ def upload(request):
 
             # print the link to the newly created post
             #print(submission.url)
-            desc= request.POST.get('description')
-            a_key=''
-            fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
-            post_to_facebook(title, desc, a_key, fpath)
+            #desc= request.POST.get('description')
+            #a_key=''
+            #fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+            #post_to_facebook(title, desc, a_key, fpath)
 
         else:
             form = UploadForm()
