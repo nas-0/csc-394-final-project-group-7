@@ -43,12 +43,12 @@ def upload(request):
                      client_secret='evbH7PflRspt2_Uj_SyJxvNoTwaJhg',
                      username='softwaretesting7',
                      password='Software7',
-                     user_agent="sdasd/1.0.0 (by /u/softwaretesting7)")
+                     user_agent="sdasd/1.0.0 (by /u/ForsoftwareTesting)")
             # create a Reddit instance by providing the required credentials
 
 
             # define the subreddit where you want to upload the video
-            subreddit_name = 'test34243242'
+            subreddit_name = 'testingapi32'
             subreddit = reddit.subreddit(subreddit_name)
 
             # define the video link and the title of the post
@@ -56,7 +56,7 @@ def upload(request):
             title = request.POST.get('title')
 
             # create the submission object
-            submission = subreddit.submit(title=title, url=video_link)
+            #submission = subreddit.submit(title=title, url=video_link)
 
             # print the link to the newly created post
             #print(submission.url)
