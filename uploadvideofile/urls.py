@@ -3,11 +3,12 @@ from django.conf.urls import include
 from . import views
 
 
-from . import views
+from .views import SignUpView
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("about/", views.about, name="about"),
+    path("videos/", views.videos, name="videos"),
     path("upload/", views.upload, name="upload"),
+    path("signup/", SignUpView.as_view(), name="signup"),
     ]
     
