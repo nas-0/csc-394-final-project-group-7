@@ -28,7 +28,7 @@ class Media(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     #filepath = models.URLField()   -- This might work if needed
-    uploader = models.ForeignKey(Uploader, null=True, on_delete=models.CASCADE) 
+    uploader = models.ForeignKey(User, null=True, on_delete=models.CASCADE) 
 
    
 

@@ -36,7 +36,10 @@ def upload(request):
 
             form = UploadForm(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                obj = form.save(commit=False)
+                obj.uploader = request.user
+                obj.save()
+                #form.save()
             else:
                 form = UploadForm()
     return render(request,'upload.html', {'form': form}) #context)
