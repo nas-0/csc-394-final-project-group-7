@@ -5,7 +5,7 @@ import requests
 import base64
 from time import sleep
 
-from django.conf import settings, redirect
+from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -24,7 +24,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
 
 import praw
-from django.shortcuts import redirect
 from praw.exceptions import APIException
 
 
