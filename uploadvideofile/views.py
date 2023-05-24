@@ -24,7 +24,7 @@ def videos(request):
     return render(request, 'videos.html')
 
 def login_view(request):
-    client_id='VhmckEe4MW5dA-b5p2IriQ',
+    client_id='VhmckEe4MW5dA-b5p2IriQ'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/'
     scope = 'identity'
     state = 'random_state_value'  
@@ -33,11 +33,11 @@ def login_view(request):
 
 def callback_view(request):
     code = request.GET.get('code')
-    client_id='VhmckEe4MW5dA-b5p2IriQ',
-    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg',
+    client_id='VhmckEe4MW5dA-b5p2IriQ'
+    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/'
     access_token_url = 'https://www.reddit.com/api/v1/access_token'
-    headers = {'User-Agent': 'Your User Agent'}
+    headers = {'User-Agent': 'softwares testing/1.0.0 (by /u/ForsoftwareTesting)'}
 
     response = requests.post(
         access_token_url,
