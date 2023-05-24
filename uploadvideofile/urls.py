@@ -1,9 +1,7 @@
 from django.urls import path
 from django.conf.urls import include
-from .views import authorize_reddit
 
 from . import views
-from .views import reddit_callback
 
 
 from .views import SignUpView
