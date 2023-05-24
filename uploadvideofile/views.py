@@ -15,7 +15,7 @@ from .facebook_scripts.fb_upload_script import post_to_facebook
 from django.contrib.auth.decorators import login_required
 import praw
 from django.shortcuts import redirect
-
+from praw.exceptions import APIException
 
 def index(request):
     return render(request, 'index.html')
@@ -91,22 +91,51 @@ def upload(request):
             name = fs.save(uploaded_video_file.name, uploaded_video_file)
             context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
             form = UploadForm(request.POST, request.FILES)
-            #access_token = request.session.get('access_token')
-            reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
+            video_link = context ['url']
+            try:
+                subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
+                reddit = praw.Reddit(
+                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                     username='softwaretesting7',
-                     password='Software7',
-                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
+                    user_agent="YOUR_USER_AGENT",
+                    redirect_uri='http://18.223.209.108/uploadvideofile/'
+                )
+                # Check if the user is authenticated with Reddit
+                if not reddit.auth.is_authenticated:
+                    # Redirect the user to authorize Reddit if they haven't authorized yet
+                    return redirect('authorize_reddit')
+                
+                # Use the access token saved in the session or retrieve it again if necessary
+                access_token = request.session.get('access_token')
+                if not access_token:
+                    access_token = reddit.auth.authorize(access_token)
+                    request.session['access_token'] = access_token
+                
+                subreddit = reddit.subreddit(subreddit_name)
+                submission = subreddit.submit(title='This is for testing purpose', url= video_link)
+                context['message'] = 'Video posted successfully on Reddit!'
+            
+            except APIException as e:
+                context['error'] = f'Error posting the video on Reddit: {e}'
+            
+            context['url'] = video_link
+            context['form'] = UploadForm()
+            #access_token = request.session.get('access_token')
+            #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                    #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                    # username='softwaretesting7',
+                     #password='Software7',
+                     #user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
             # create a Reddit instance by providing the required credentials
 
 
             # define the subreddit where you want to upload the video
             subreddit_name = 'testingapi32'
-            subreddit = reddit.subreddit(subreddit_name)
+            #subreddit = reddit.subreddit(subreddit_name)
 
             # define the video link and the title of the post
-            video_link = context ['url']
-            title = request.POST.get('title')
+            #video_link = context ['url']
+            #title = request.POST.get('title')
 
             # create the submission object
             #submission = subreddit.submit(title=title, url=video_link)
