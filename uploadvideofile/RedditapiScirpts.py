@@ -1,10 +1,11 @@
 import praw 
 
-reddit = praw.Reddit(client_id='MZ9N_VToT15PkC38Ij7JsQ',
-                     client_secret='evbH7PflRspt2_Uj_SyJxvNoTwaJhg',
-                     username='ForsoftwareTesting',
-                     password='Password876',
-                     user_agent="sdasd/1.0.0 (by /u/ForsoftwareTesting)")
+reddit = praw.Reddit(client_id='VhmckEe4MW5dA-b5p2IriQ',
+                     client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg',
+                     username='softwaretesting7',
+                     password='Software7',
+                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
+
             # create a Reddit instance by providing the required credentials
 
 
