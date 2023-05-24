@@ -76,8 +76,7 @@ def upload(request):
             access_token = request.session.get('access_token')
             reddit = praw.Reddit(client_id='VhmckEe4MW5dA-b5p2IriQ',
                      client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg',
-                     username='softwaretesting7',
-                     password='Software7',
+                     access_token=access_token,
                      user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
             # create a Reddit instance by providing the required credentials
 
@@ -91,7 +90,7 @@ def upload(request):
             title = request.POST.get('title')
 
             # create the submission object
-            #submission = subreddit.submit(title=title, url=video_link)
+            submission = subreddit.submit(title=title, url=video_link)
 
             # print the link to the newly created post
             #print(submission.url)
