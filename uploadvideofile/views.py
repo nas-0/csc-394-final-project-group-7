@@ -27,7 +27,7 @@ def videos(request):
 def authorize_reddit(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/upload/'
     
     # Create a Reddit instance
     reddit = praw.Reddit(
@@ -49,7 +49,7 @@ def authorize_reddit(request):
 def reddit_callback(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/upload/'
     
     # Retrieve the authorization code from the query parameters
     authorization_code = request.GET.get('code')
@@ -99,7 +99,7 @@ def upload(request):
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     user_agent="YOUR_USER_AGENT",
-                    redirect_uri='http://18.223.209.108/uploadvideofile/'
+                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/'
                 )
                 # Check if the user is authenticated with Reddit
                 access_token = request.session.get('access_token')
