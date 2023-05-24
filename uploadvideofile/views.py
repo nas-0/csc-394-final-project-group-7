@@ -4,12 +4,17 @@ import os
 import requests
 import base64
 from time import sleep
+<<<<<<< HEAD
 from uploadvideofile.models import Media
 from uploadvideofile.forms import UploadForm, HttpResponseRedirect
 
 from django.conf import settings, redirect
+=======
+
+from django.conf import settings
+>>>>>>> 143e2b0bd9cd68d3e12f81ff49013565028b0068
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 
 from uploadvideofile.models import Media, Uploader
@@ -21,13 +26,16 @@ from django.views import generic
 
 from django.contrib.auth.decorators import login_required
 
+<<<<<<< HEAD
 from django.shortcuts import render
 from django.shortcuts import redirect
+=======
+from django.shortcuts import redirect, render
+>>>>>>> 143e2b0bd9cd68d3e12f81ff49013565028b0068
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
-from django.contrib.auth.decorators import login_required
+
 import praw
-from django.shortcuts import redirect
 from praw.exceptions import APIException
 
 
@@ -39,18 +47,11 @@ class SignUpView(generic.CreateView):
 
 
 
-
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
-
-
 def index(request):
     return render(request, 'index.html')
 
 
-
+@login_required
 def videos(request):
     medias = Media.objects.filter(uploader=request.user).values_list('video')
     template = loader.get_template('videos.html')
