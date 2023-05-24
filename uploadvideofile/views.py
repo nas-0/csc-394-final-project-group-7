@@ -24,7 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
 
 import praw
-from praw.exceptions import APIException
+
 
 
 class SignUpView(generic.CreateView):

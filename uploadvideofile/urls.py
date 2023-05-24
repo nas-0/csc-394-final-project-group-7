@@ -14,8 +14,7 @@ urlpatterns = [
     path("upload/", views.upload, name="upload"),
     path("signup/", SignUpView.as_view(), name="signup"),
     path("edituploader/", views.edituploader, name="edituploader"),
-    path('authorize_reddit/', authorize_reddit, name='authorize_reddit'),
-    path('reddit_callback/', reddit_callback, name='reddit_callback'),
+
     
 
     ]
