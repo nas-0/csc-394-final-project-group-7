@@ -4,15 +4,10 @@ import os
 import requests
 import base64
 from time import sleep
-<<<<<<< HEAD
 from uploadvideofile.models import Media
 from uploadvideofile.forms import UploadForm, HttpResponseRedirect
 
 from django.conf import settings, redirect
-=======
-
-from django.conf import settings
->>>>>>> 143e2b0bd9cd68d3e12f81ff49013565028b0068
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -26,12 +21,7 @@ from django.views import generic
 
 from django.contrib.auth.decorators import login_required
 
-<<<<<<< HEAD
-from django.shortcuts import render
-from django.shortcuts import redirect
-=======
 from django.shortcuts import redirect, render
->>>>>>> 143e2b0bd9cd68d3e12f81ff49013565028b0068
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
 
