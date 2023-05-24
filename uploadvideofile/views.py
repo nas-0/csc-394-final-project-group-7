@@ -136,9 +136,6 @@ def upload(request):
                 )
                 # Check if the user is authenticated with Reddit
                 access_token = request.session.get('access_token')
-                if not access_token:
-                    # Redirect the user to authorize Reddit if the access token is not present
-                    return redirect('authorize_reddit')
                 
                 # Use the access token to make authenticated API requests
                 reddit.set_access_credentials(None, None, access_token)
