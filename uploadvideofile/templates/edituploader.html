@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
   <title>Upload Video</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
   <style>
@@ -91,31 +91,15 @@
     }
 
 </style>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/uploadvideofile">Home</a>
-        <a class="nav-link" href="/uploadvideofile/videos">Videos</a>
-        <a class="nav-link" href="/uploadvideofile/upload">Upload</a>
-        {% if user.is_authenticated %}
-        <a class="nav-link" href="/uploadvideofile/edituploader">Edit Socials</a>
-          <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-          
-        {% else %}
-        <a class="nav-link" href="/accounts/login">Login</a>
-        <a class="nav-link" href="/uploadvideofile/signup">Create an Account</a>
-        {% endif %}
+</head>
 
-      </div>
-    </div>
-  </div>
-</nav>
+{% block title %}Edit{% endblock %}
 
-<h1> welcome to your videos!</h1>
-
-{% for x in videos %}
-<tr>
-  <td>{{ x }}</td>
-</tr>
-{% endfor %}
+{% block content %}
+  <h2>Edit</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Edit</button>
+  </form>
+{% endblock %}

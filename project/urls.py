@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import  static
 
 urlpatterns = [
+    
     path('fb/', include('fb.urls')),
     path("uploadvideofile/", include("uploadvideofile.urls")), 
     path('accounts/', include('django.contrib.auth.urls')),
