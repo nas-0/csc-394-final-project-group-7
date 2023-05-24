@@ -39,7 +39,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-
+@login_required
 def videos(request):
     medias = Media.objects.filter(uploader=request.user).values_list('video')
     template = loader.get_template('videos.html')
