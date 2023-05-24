@@ -4,10 +4,8 @@ import os
 import requests
 import base64
 from time import sleep
-from uploadvideofile.models import Media
-from uploadvideofile.forms import UploadForm, HttpResponseRedirect
 
-from django.conf import settings, redirect
+from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -27,7 +25,6 @@ from .facebook_scripts.fb_upload_script import post_to_facebook
 
 import praw
 from praw.exceptions import APIException
-
 
 
 class SignUpView(generic.CreateView):
