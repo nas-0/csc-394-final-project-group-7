@@ -72,6 +72,7 @@ def edituploader(request):
                 form = UploadForm()
     return render(request,'edituploader.html', {'form': form}) #context)
 
+
 def authorize_reddit(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
@@ -94,7 +95,6 @@ def authorize_reddit(request):
     
     # Redirect the user to the authorization URL
     return redirect(auth_url)
-
 
 def reddit_callback(request):
     client_id = 'MpVe0s7TUeAjMj9UVJbO-g'
@@ -154,6 +154,7 @@ def reddit_callback(request):
         return redirect('YOUR_ERROR_URL')
 
 
+
 @csrf_exempt
 @login_required
 def upload(request):
@@ -190,9 +191,6 @@ def upload(request):
                     )
                     # Check if the user is authenticated with Reddit
                     access_token = request.session.get('access_token')
-                    if not access_token:
-                        # Redirect the user to authorize Reddit if the access token is not present
-                        return redirect('authorize_reddit')
                     
                     # Use the access token to make authenticated API requests
                     reddit.set_access_credentials(None, None, access_token)
