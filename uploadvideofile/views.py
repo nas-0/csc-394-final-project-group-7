@@ -26,6 +26,15 @@ from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
 from django.contrib.auth.decorators import login_required
 import praw
+from django.shortcuts import redirect
+from praw.exceptions import APIException
+
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
 
 
@@ -62,42 +71,87 @@ def edituploader(request):
             else:
                 form = UploadForm()
     return render(request,'edituploader.html', {'form': form}) #context)
-     
 
-
-def login_view(request):
-    client_id='VhmckEe4MW5dA-b5p2IriQ'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
-    scope = 'identity'
-    state = 'random_state_value'  
-    authorize_url = f'https://www.reddit.com/api/v1/authorize?client_id={client_id}&response_type=code&state={state}&redirect_uri={redirect_uri}&duration=permanent&scope={scope}'
-    return redirect(authorize_url)
-
-def callback_view(request):
-    code = request.GET.get('code')
-    client_id='VhmckEe4MW5dA-b5p2IriQ'
-    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
-    access_token_url = 'https://www.reddit.com/api/v1/access_token'
-    headers = {'User-Agent': ''}
-
-    response = requests.post(
-        access_token_url,
-        headers=headers,
-        data={
-            'grant_type': 'authorization_code',
-            'code': code,
-            'redirect_uri': redirect_uri
-        },
-        auth=(client_id, client_secret)
+def authorize_reddit(request):
+    client_id='MpVe0s7TUeAjMj9UVJbO-g'
+    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/upload/'
+    
+    # Create a Reddit instance
+    reddit = praw.Reddit(
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+        user_agent="YOUR_USER_AGENT"
     )
-    access_token = response.json().get('access_token')
+    
+    # Generate the authorization URL
+    auth_url = reddit.auth.url(
+        scopes=['identity', 'read', 'submit'],
+        state='YOUR_STATE',
+        duration='permanent'
+    )
+    
+    # Redirect the user to the authorization URL
+    return redirect(auth_url)
 
-    # Store the access token securely (e.g., in the user's session)
-    request.session['access_token'] = access_token
 
-    # Redirect the user to the upload page or any other desired page
-    return redirect('upload')
+def reddit_callback(request):
+    client_id = 'MpVe0s7TUeAjMj9UVJbO-g'
+    client_secret = 'owxGhaijKhQHeXnVkI77JbH1vhswSg'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/upload/'
+    
+    # Retrieve the authorization code from the query parameters
+    authorization_code = request.GET.get('code')
+    
+    try:
+        # Create a Reddit instance
+        reddit = praw.Reddit(
+            client_id=client_id,
+            client_secret=client_secret,
+            redirect_uri=redirect_uri,
+            user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)"
+        )
+        
+        # Exchange the authorization code for an access token
+        access_token = reddit.auth.authorize(authorization_code)
+        
+        # Save the access_token to use it for authenticated API requests
+        
+        # Continue with the video upload process
+        if 'video_link' in request.session:
+            video_link = request.session['video_link']
+            subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
+            try:
+                reddit = praw.Reddit(
+                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                    user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                    redirect_uri='http://18.223.209.108/uploadvideofile/'
+                )
+                # Check if the user is authenticated with Reddit
+                access_token = request.session.get('access_token')
+                if not access_token:
+                    # Redirect the user to authorize Reddit if the access token is not present
+                    return redirect('authorize_reddit')
+                
+                # Use the access token to make authenticated API requests
+                reddit.set_access_credentials(None, None, access_token)
+                
+                subreddit = reddit.subreddit(subreddit_name)
+                submission = subreddit.submit(title='This is for testing purpose', url=video_link)
+                
+            
+            except praw.exceptions.APIException as e:
+                print(f'Error posting the video on Reddit: {e}')
+        
+        # Redirect the user to the desired page
+        return redirect('http://18.223.209.108/uploadvideofile/upload/')
+        
+    except praw.exceptions.PRAWException as e:
+        # Handle any errors that occur during the authorization process
+        # Redirect the user to an error page or display an error message
+        return redirect('YOUR_ERROR_URL')
 
 
 @csrf_exempt
@@ -120,22 +174,54 @@ def upload(request):
                 name = fs.save(uploaded_video_file.name, uploaded_video_file)
                 context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 form = UploadForm(request.POST, request.FILES)
+                video_link = context ['url']
+                subreddit_name = 'testingapi32'
+                request.session['video_link'] = video_link
+                
+                context['url'] = video_link
+                context['form'] = UploadForm()
+                try:
+                    subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
+                    reddit = praw.Reddit(
+                        client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                        client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                        redirect_uri='http://18.223.209.108/uploadvideofile/upload/'
+                    )
+                    # Check if the user is authenticated with Reddit
+                    access_token = request.session.get('access_token')
+                    if not access_token:
+                        # Redirect the user to authorize Reddit if the access token is not present
+                        return redirect('authorize_reddit')
+                    
+                    # Use the access token to make authenticated API requests
+                    reddit.set_access_credentials(None, None, access_token)
+                    
+                    subreddit = reddit.subreddit(subreddit_name)
+                    submission = subreddit.submit(title='This is for testing purpose', url=video_link)
+                    context['message'] = 'Video posted successfully on Reddit!'
+                
+                except praw.exceptions.APIException as e:
+                    context['error'] = f'Error posting the video on Reddit: {e}'
+                
+                context['url'] = video_link
+                context['form'] = UploadForm()
                 #access_token = request.session.get('access_token')
-                reddit = praw.Reddit(client_id='VhmckEe4MW5dA-b5p2IriQ',
-                        client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg',
-                        username='softwaretesting7',
-                        password='Software7',
-                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
+                #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                        #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                        # username='softwaretesting7',
+                        #password='Software7',
+                        #user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
                 # create a Reddit instance by providing the required credentials
 
 
                 # define the subreddit where you want to upload the video
                 subreddit_name = 'testingapi32'
-                subreddit = reddit.subreddit(subreddit_name)
+                #subreddit = reddit.subreddit(subreddit_name)
 
                 # define the video link and the title of the post
-                video_link = context ['url']
-                title = request.POST.get('title')
+                #video_link = context ['url']
+                #title = request.POST.get('title')
 
                 # create the submission object
                 #submission = subreddit.submit(title=title, url=video_link)
@@ -146,7 +232,6 @@ def upload(request):
                 #a_key=''
                 #fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
                 #post_to_facebook(title, desc, a_key, fpath)
-
 
                 return redirect('/uploadvideofile/videos')
                 #form.save()
