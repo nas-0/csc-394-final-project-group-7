@@ -9,11 +9,11 @@ from django.db.models.signals import post_save
 #       raise ValidationError(u'Error message')
 
 class Uploader(models.Model):
-    name = models.CharField(blank=True, null=True, max_length=30)
-    reddit_user = models.CharField(blank=True, null=True, max_length=30)
-    reddit_password = models.CharField(blank=True, null=True, max_length=30)
-    fb_access_key = models.CharField(blank=True, null=True, max_length=100)
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, primary_key=False)
+    name = models.CharField(blank=True, max_length=30)
+    reddit_user = models.CharField(blank=True, max_length=30)
+    reddit_password = models.CharField(blank=True, max_length=30)
+    fb_access_key = models.CharField(blank=True, max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=False)
 
     def __str__(self) -> str:
         return self.user.username
