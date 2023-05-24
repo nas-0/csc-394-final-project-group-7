@@ -92,6 +92,7 @@ def upload(request):
             context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
             form = UploadForm(request.POST, request.FILES)
             video_link = context ['url']
+            subreddit_name = 'testingapi32'
             try:
                 subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
                 reddit = praw.Reddit(
@@ -101,21 +102,19 @@ def upload(request):
                     redirect_uri='http://18.223.209.108/uploadvideofile/'
                 )
                 # Check if the user is authenticated with Reddit
-                if not reddit.auth.is_authenticated:
-                    # Redirect the user to authorize Reddit if they haven't authorized yet
-                    return redirect('authorize_reddit')
-                
-                # Use the access token saved in the session or retrieve it again if necessary
                 access_token = request.session.get('access_token')
                 if not access_token:
-                    access_token = reddit.auth.authorize(access_token)
-                    request.session['access_token'] = access_token
+                    # Redirect the user to authorize Reddit if the access token is not present
+                    return redirect('authorize_reddit')
+                
+                # Use the access token to make authenticated API requests
+                reddit.set_access_credentials(None, None, access_token)
                 
                 subreddit = reddit.subreddit(subreddit_name)
-                submission = subreddit.submit(title='This is for testing purpose', url= video_link)
+                submission = subreddit.submit(title='This is for testing purpose', url=video_link)
                 context['message'] = 'Video posted successfully on Reddit!'
             
-            except APIException as e:
+            except praw.exceptions.APIException as e:
                 context['error'] = f'Error posting the video on Reddit: {e}'
             
             context['url'] = video_link
