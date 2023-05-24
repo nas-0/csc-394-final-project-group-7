@@ -1,6 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template import loader
 
 from uploadvideofile.models import Media, Uploader
 from uploadvideofile.forms import UploadForm, UploaderForm
@@ -25,7 +27,12 @@ def index(request):
 
 
 def videos(request):
-    return render(request, 'videos.html')
+    medias = Media.objects.filter(uploader=request.user).values_list('video')
+    template = loader.get_template('videos.html')
+    context = {
+    'videos': medias,
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def edituploader(request):

@@ -112,4 +112,10 @@
   </div>
 </nav>
 
-<h1> welcome to videos!</h1>
+<h1> welcome to your videos!</h1>
+
+{% for x in videos %}
+<tr>
+  <td>{{ x }}</td>
+</tr>
+{% endfor %}
