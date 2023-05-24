@@ -37,7 +37,7 @@ def callback_view(request):
     client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/'
     access_token_url = 'https://www.reddit.com/api/v1/access_token'
-    headers = {'User-Agent': 'softwares testing/1.0.0 (by /u/ForsoftwareTesting)'}
+    headers = {'User-Agent': ''}
 
     response = requests.post(
         access_token_url,
@@ -73,10 +73,11 @@ def upload(request):
             name = fs.save(uploaded_video_file.name, uploaded_video_file)
             context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
             form = UploadForm(request.POST, request.FILES)
-            access_token = request.session.get('access_token')
+            #access_token = request.session.get('access_token')
             reddit = praw.Reddit(client_id='VhmckEe4MW5dA-b5p2IriQ',
                      client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg',
-                     access_token=access_token,
+                     username='softwaretesting7',
+                     password='Software7',
                      user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
             # create a Reddit instance by providing the required credentials
 
@@ -90,7 +91,7 @@ def upload(request):
             title = request.POST.get('title')
 
             # create the submission object
-            submission = subreddit.submit(title=title, url=video_link)
+            #submission = subreddit.submit(title=title, url=video_link)
 
             # print the link to the newly created post
             #print(submission.url)
