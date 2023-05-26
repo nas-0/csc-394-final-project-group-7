@@ -114,7 +114,7 @@ def upload(request):
                 # print the link to the newly created post
                 print(submission.url)
                 desc= request.POST.get('description')
-                a_key=''
+                a_key='EAANC9YHYLpkBAPcvFZAcg27gvAr7rG3qqMC4ZAgHF0ZBnnD04TYeJtPF0mwbUkPoqFLZAL7mhaVZAmQtYS2UI780momWpSbZBuYalGLQgzLp9lbtpl662XURZAa0lzpao55rgKxavg6amukCM44CEokcQGF7gzNEyqZCPCCO81gb2I4Y7eMHSUyRYkD5Wo1SsZB8zYEZCGdTZBm1oAwbZBOwedzB'
                 fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
                 post_to_facebook(title, desc, a_key, fpath)
 
