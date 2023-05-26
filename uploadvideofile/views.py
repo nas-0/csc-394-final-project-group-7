@@ -92,31 +92,33 @@ def upload(request):
                 context['url'] = video_link
                 context['form'] = UploadForm()
                 #access_token = request.session.get('access_token')
-                reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
-                        client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                        username='softwaretesting7',
-                        password='Software7',
-                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
+                #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                        #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                        #username='softwaretesting7',
+                        #password='Software7',
+                        #user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
                 # create a Reddit instance by providing the required credentials
 
 
                 # define the subreddit where you want to upload the video
-                subreddit_name = 'testingapi32'
-                subreddit = reddit.subreddit(subreddit_name)
+                #subreddit_name = 'testingapi32'
+                #subreddit = reddit.subreddit(subreddit_name)
 
                 # define the video link and the title of the post
-                video_link = context ['url']
-                title = request.POST.get('title')
+                #video_link = context ['url']
+                #title = request.POST.get('title')
 
                 # create the submission object
-                submission = subreddit.submit(title=title, url=video_link)
+                #submission = subreddit.submit(title=title, url=video_link)
 
                 # print the link to the newly created post
-                print(submission.url)
-                desc= request.POST.get('description')
-                a_key='EAANC9YHYLpkBAPcvFZAcg27gvAr7rG3qqMC4ZAgHF0ZBnnD04TYeJtPF0mwbUkPoqFLZAL7mhaVZAmQtYS2UI780momWpSbZBuYalGLQgzLp9lbtpl662XURZAa0lzpao55rgKxavg6amukCM44CEokcQGF7gzNEyqZCPCCO81gb2I4Y7eMHSUyRYkD5Wo1SsZB8zYEZCGdTZBm1oAwbZBOwedzB'
-                fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
-                post_to_facebook(title, desc, a_key, fpath)
+
+                #print(submission.url)
+                #desc= request.POST.get('description')
+                #a_key=''
+                #fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+                #post_to_facebook(title, desc, a_key, fpath)
+
 
 
                 return redirect('/uploadvideofile/videos')
