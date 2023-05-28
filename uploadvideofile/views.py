@@ -206,7 +206,7 @@ def upload(request):
                         subreddit = reddit.subreddit(subreddit_name)
                         submission = subreddit.submit(
                         title='This is for testing purpose',
-                        url=video_link
+                        url='https://mutiplatformsvideosupload.net/video/TESTING2%20-%20demo_MoLoNlD.mp4'
                 )
                         context['message'] = 'Video posted successfully on Reddit!'
                     except praw.exceptions.APIException as e:
