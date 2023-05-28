@@ -211,6 +211,7 @@ def upload(request):
                     
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
+                    return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
             context['url'] = video_link
             context['form'] = UploadForm()
