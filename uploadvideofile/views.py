@@ -183,6 +183,7 @@ def upload(request):
                     access_token = request.session.get('access_token')
                     if not access_token:
                         access_token = request.session.get('access_token')
+                        return redirect('authorize_reddit')
                     reddits = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
