@@ -183,7 +183,7 @@ def upload(request):
                     reddit = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
+                    refresh_token=access_token,
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                 )
                     
