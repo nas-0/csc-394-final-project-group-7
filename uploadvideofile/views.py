@@ -174,7 +174,6 @@ def upload(request):
                 form = UploadForm(request.POST, request.FILES)
                 
                 video_link = context ['url']
-                request.session['video_link'] = video_link
                 subreddit_name = 'testingapi32'         
                 try:
                     
@@ -213,8 +212,6 @@ def upload(request):
                     context['error'] = f'Error posting the video on Reddit: {e}'
                     return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
-            context['url'] = video_link
-            context['form'] = UploadForm()
                 #access_token = request.session.get('access_token')
                 #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
                         #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
