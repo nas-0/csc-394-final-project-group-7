@@ -72,7 +72,7 @@ def authorize_reddit(request):
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
-        user_agent="YOUR_USER_AGENT"
+        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
     )
     
     # Generate the authorization URL
