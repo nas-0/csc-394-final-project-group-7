@@ -182,8 +182,7 @@ def upload(request):
                  # Use the access token saved in the session or retrieve it again if necessary
                     access_token = request.session.get('access_token')
                     if not access_token:
-                        access_token = reddit.auth.authorize(access_token)
-                        request.session['access_token'] = access_token
+                        access_token = request.session.get('access_token')
 
                     subreddit = reddit.subreddit(subreddit_name)
                     submission = subreddit.submit(title='This is for testing purpose', url= video_link)
