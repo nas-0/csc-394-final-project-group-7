@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
+from praw.exceptions import APIException
 
 import praw
 
@@ -150,16 +151,37 @@ def upload(request):
                 form = UploadForm(request.POST, request.FILES)
                 video_link = context ['url']
                 subreddit_name = 'testingapi32'
+                video_link = context ['url']
                 request.session['video_link'] = video_link
+                try:
+                    subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
+                    reddit = praw.Reddit(
+                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                    user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
+                )
                 
-                context['url'] = video_link
-                context['form'] = UploadForm()
-                if not access_token:
-                    access_token = reddit.auth.authorize(access_token)
-                    request.session['access_token'] = access_token
+                    context['url'] = video_link
+                    context['form'] = UploadForm()
+                    if not reddit.auth.is_authenticated:
+                    # Redirect the user to authorize Reddit if they haven't authorized yet
+                        return redirect('authorize_reddit')
 
-                subreddit =('testingapi32')
-                submission = subreddit.submit(title='This is for testing purpose', url= video_link)
+                # Use the access token saved in the session or retrieve it again if necessary
+                    access_token = request.session.get('access_token')
+                    if not access_token:
+                        access_token = reddit.auth.authorize(access_token)
+                        request.session['access_token'] = access_token
+
+                    subreddit = reddit.subreddit(subreddit_name)
+                    submission = subreddit.submit(title='This is for testing purpose', url= video_link)
+                    context['message'] = 'Video posted successfully on Reddit!'
+                except APIException as e:
+                    context['error'] = f'Error posting the video on Reddit: {e}'
+
+            context['url'] = video_link
+            context['form'] = UploadForm()
                 #access_token = request.session.get('access_token')
                 #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
                         #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
@@ -188,9 +210,9 @@ def upload(request):
                 #post_to_facebook(title, desc, a_key, fpath)
 
 
-                return redirect('/uploadvideofile/videos')
-                form.save()
-            else:
-                form = UploadForm()
+            return redirect('/uploadvideofile/videos')
+            form.save()
+    else:
+        form = UploadForm()
     return render(request,'upload.html', {'form': form, 'context': context}) #context)
         
