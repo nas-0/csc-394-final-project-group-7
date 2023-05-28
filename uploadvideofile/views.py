@@ -173,11 +173,11 @@ def upload(request):
                 context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 form = UploadForm(request.POST, request.FILES)
                 video_link = context ['url']
-                subreddit_name = 'testingapi32'
+                
                 video_link = context ['url']
                 request.session['video_link'] = video_link
                 try:
-                    subreddit_name = 'testingapi32'  # Replace with the subreddit where you want to post the video
+                    subreddit_name = 'testingapi32' 
                     reddit = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
@@ -198,9 +198,9 @@ def upload(request):
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
                     user_agent='softwares testing/1.0.0 (by /u/ForsoftwareTesting)',
-                    access_token=access_token  # Pass the access token directly
+    
                         )
-                    subreddit = reddits.subreddit(subreddit_name)
+                    subreddit = reddits.subreddit('testingapi32')
                     submission = subreddit.submit(title='This is for testing purpose', url= video_link)
                     context['message'] = 'Video posted successfully on Reddit!'
                 except APIException as e:
