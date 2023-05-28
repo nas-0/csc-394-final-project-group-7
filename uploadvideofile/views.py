@@ -173,12 +173,9 @@ def upload(request):
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
-                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
+                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/'
                 )
-                
-                    context['url'] = video_link
-                    context['form'] = UploadForm()
-                    if not reddit.auth.is_authorised:
+                    if not reddit.auth.is_authenticated:
                     # Redirect the user to authorize Reddit if they haven't authorized yet
                         return redirect(authorize_reddit)
 
