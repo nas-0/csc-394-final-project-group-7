@@ -175,7 +175,7 @@ def upload(request):
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                     redirect_uri='http://18.223.209.108/uploadvideofile/upload/'
                 )
-                    if not reddit.auth.is_authenticated:
+                    if not reddit.read_only:
                     # Redirect the user to authorize Reddit if they haven't authorized yet
                         return redirect(authorize_reddit)
 
