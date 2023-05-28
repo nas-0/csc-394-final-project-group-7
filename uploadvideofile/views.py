@@ -200,13 +200,14 @@ def upload(request):
                         client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                         user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                         redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
-                        access_token=request.session.get('access_token')
+                        access_token=access_token
                 )
 
                         subreddit = reddits.subreddit(subreddit_name)
+                        title = request.POST.get('title')
                         submission = subreddit.submit(
-                        title='This is for testing purpose',
-                        url=video_link
+                        title=title,
+                        url=video_link,
                 )
                         context['message'] = 'Video posted successfully on Reddit!'
                     except praw.exceptions.APIException as e:
