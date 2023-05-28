@@ -151,8 +151,6 @@ def reddit_callback(request):
 
 
 
-
-@csrf_exempt
 @login_required
 def upload(request):
     form = UploadForm(request.POST, request.FILES)
