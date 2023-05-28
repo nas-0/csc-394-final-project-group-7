@@ -178,7 +178,9 @@ def upload(request):
                 
                     context['url'] = video_link
                     context['form'] = UploadForm()
-                   
+                    if not reddit.auth.is_authorised:
+                    # Redirect the user to authorize Reddit if they haven't authorized yet
+                        return redirect(authorize_reddit)
 
                  # Use the access token saved in the session or retrieve it again if necessary
                     access_token = request.session.get('access_token')
