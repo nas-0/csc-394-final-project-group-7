@@ -173,7 +173,7 @@ def upload(request):
                 context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 form = UploadForm(request.POST, request.FILES)
                 
-                video_link = context ['url']
+                video_link = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 request.session['video_link'] = video_link
                 try:
                     subreddit_name = 'testingapi32' 
