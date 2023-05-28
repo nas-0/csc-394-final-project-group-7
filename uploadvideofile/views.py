@@ -192,16 +192,25 @@ def upload(request):
                     if not access_token:
                         access_token = request.session.get('access_token')
                         return redirect('authorize_reddit')
-                    reddits = praw.Reddit(
-                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
-                    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
-                    user_agent='softwares testing/1.0.0 (by /u/ForsoftwareTesting)',
-                    access_token=request.session.get('access_token')
-     )
-                    subreddit = reddits.subreddit('testingapi32')
-                    submission = subreddit.submit(title='This is for testing purpose', url= video_link)
-                    context['message'] = 'Video posted successfully on Reddit!'
+                    
+
+                    try:
+                        reddit = praw.Reddit(
+                        client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                        client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                        redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
+                        access_token=request.session.get('access_token')
+                )
+
+                        subreddit = reddit.subreddit(subreddit_name)
+                        submission = subreddit.submit(
+                        title='This is for testing purpose',
+                        url=video_link
+                )
+                        context['message'] = 'Video posted successfully on Reddit!'
+                    except praw.exceptions.APIException as e:
+                        context['error'] = f'Error posting the video on Reddit: {e}'
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
 
