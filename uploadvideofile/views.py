@@ -191,12 +191,10 @@ def upload(request):
                  
                     access_token = request.session.get('access_token')
                     if not access_token:
-                        access_token = request.session.get('access_token')
                         return redirect('authorize_reddit')
                     
 
                     try:
-                        access_token = request.session.get('access_token')
                         headers = {'Authorization': f'Bearer {access_token}'}
                         data = {
                     'title': 'This is for testing purpose',
