@@ -65,11 +65,25 @@ def edituploader(request):
 def authorize_reddit(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
-    scope = 'identity'
-    state = 'random_state_value'  
-    authorize_url = f'https://www.reddit.com/api/v1/authorize?client_id={client_id}&response_type=code&state={state}&redirect_uri={redirect_uri}&duration=permanent&scope={scope}'
-    return redirect(authorize_url)
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
+    
+    # Create a Reddit instance
+    reddit = praw.Reddit(
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+        user_agent="YOUR_USER_AGENT"
+    )
+    
+    # Generate the authorization URL
+    auth_url = reddit.auth.url(
+        scopes=['identity', 'read', 'submit'],
+        state='YOUR_STATE',
+        duration='permanent'
+    )
+    
+    # Redirect the user to the authorization URL
+    return redirect(auth_url)
 
 def callback_view(request):
     code = request.GET.get('code')
@@ -168,7 +182,7 @@ def upload(request):
                     # Redirect the user to authorize Reddit if they haven't authorized yet
                         return redirect('authorize_reddit')
 
-                # Use the access token saved in the session or retrieve it again if necessary
+                 # Use the access token saved in the session or retrieve it again if necessary
                     access_token = request.session.get('access_token')
                     if not access_token:
                         access_token = reddit.auth.authorize(access_token)
