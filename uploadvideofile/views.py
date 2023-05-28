@@ -175,7 +175,7 @@ def upload(request):
                 
                 video_link = context ['url']
                 request.session['video_link'] = video_link
-                subreddit_name = 'testingapi32' 
+                subreddit_name = 'testingapi32'         
                 try:
                     
                     reddit = praw.Reddit(
@@ -201,6 +201,7 @@ def upload(request):
 
                         if response.status_code == 200:
                             context['message'] = 'Video posted successfully on Reddit!'
+                            return redirect('http://18.223.209.108/uploadvideofile/upload/')
                         else:
                             context['error'] = f'Error posting the video on Reddit: {response.json()}'
                     except Exception as e:
