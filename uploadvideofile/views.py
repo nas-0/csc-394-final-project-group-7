@@ -183,8 +183,14 @@ def upload(request):
                     access_token = request.session.get('access_token')
                     if not access_token:
                         access_token = request.session.get('access_token')
-
-                    subreddit = reddit.subreddit(subreddit_name)
+                    reddits = praw.Reddit(
+                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/reddit_callback/',
+                    user_agent='softwares testing/1.0.0 (by /u/ForsoftwareTesting)',
+                    access_token=access_token  # Pass the access token directly
+                        )
+                    subreddit = reddits.subreddit(subreddit_name)
                     submission = subreddit.submit(title='This is for testing purpose', url= video_link)
                     context['message'] = 'Video posted successfully on Reddit!'
                 except APIException as e:
