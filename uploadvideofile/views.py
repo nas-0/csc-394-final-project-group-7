@@ -173,7 +173,7 @@ def upload(request):
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
-                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/'
+                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/reddit_callback/'
                 )
                     if not reddit.read_only:
                     # Redirect the user to authorize Reddit if they haven't authorized yet
