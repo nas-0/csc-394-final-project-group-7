@@ -177,7 +177,7 @@ def upload(request):
                 )
                     if not reddit.read_only:
                     # Redirect the user to authorize Reddit if they haven't authorized yet
-                        return redirect(authorize_reddit)
+                        return redirect('authorize_reddit')
 
                  # Use the access token saved in the session or retrieve it again if necessary
                     access_token = request.session.get('access_token')
