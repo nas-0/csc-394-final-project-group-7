@@ -139,6 +139,7 @@ def reddit_callback(request):
 
         # Exchange the authorization code for an access token
         access_token = reddit.auth.authorize(authorization_code)
+        request.session['access_token'] = access_token
 
         # Save the access_token to use it for authenticated API requests
 
@@ -184,10 +185,10 @@ def upload(request):
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
                 )
                     if not reddit.read_only:
-                    # Redirect the user to authorize Reddit if they haven't authorized yet
+                    
                         return redirect('authorize_reddit')
 
-                 # Use the access token saved in the session or retrieve it again if necessary
+                 
                     access_token = request.session.get('access_token')
                     if not access_token:
                         access_token = request.session.get('access_token')
