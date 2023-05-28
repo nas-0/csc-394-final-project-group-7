@@ -93,7 +93,7 @@ def callback_view(request):
     access_token_url = 'https://www.reddit.com/api/v1/access_token'
     headers = {'User-Agent': ''}
 
-    response = requests.post
+    response = requests.post(
     access_token_url,
     headers=headers,
     data={
@@ -102,13 +102,14 @@ def callback_view(request):
         'redirect_uri': redirect_uri
         },
     auth=(client_id, client_secret)
+    )
     access_token = response.json().get('access_token')
 
     # Store the access token securely (e.g., in the user's session)
     request.session['access_token'] = access_token
 
     # Redirect the user to the upload page or any other desired page
-    return redirect('upload')
+    return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
 def reddit_callback(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
@@ -133,7 +134,7 @@ def reddit_callback(request):
         # Save the access_token to use it for authenticated API requests
 
         # Redirect the user to the desired page
-        return redirect('http://18.223.209.108/uploadvideofile/reddit_callback/')
+        return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
