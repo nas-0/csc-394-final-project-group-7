@@ -198,8 +198,8 @@ def upload(request):
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
                     user_agent='softwares testing/1.0.0 (by /u/ForsoftwareTesting)',
-    
-                        )
+                    access_token=access_token
+     )
                     subreddit = reddits.subreddit('testingapi32')
                     submission = subreddit.submit(title='This is for testing purpose', url= video_link)
                     context['message'] = 'Video posted successfully on Reddit!'
