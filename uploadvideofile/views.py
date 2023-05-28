@@ -173,7 +173,7 @@ def upload(request):
                 context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 form = UploadForm(request.POST, request.FILES)
                 
-                video_link = "https://mutiplatformsvideosupload.net"+fs.url(name)
+                video_link = context ['url']
                 request.session['video_link'] = video_link
                 try:
                     subreddit_name = 'testingapi32' 
@@ -206,7 +206,7 @@ def upload(request):
                         subreddit = reddits.subreddit(subreddit_name)
                         submission = subreddit.submit(
                         title='This is for testing purpose',
-                        url='https://mutiplatformsvideosupload.net/video/TESTING2%20-%20demo_MoLoNlD.mp4'
+                        url=video_link
                 )
                         context['message'] = 'Video posted successfully on Reddit!'
                     except praw.exceptions.APIException as e:
