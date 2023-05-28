@@ -195,14 +195,14 @@ def upload(request):
                     
 
                     try:
-                        reddit = praw.Reddit(
+                        reddits = praw.Reddit(
                         client_id='MpVe0s7TUeAjMj9UVJbO-g',
                         client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                         user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                         redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
                 )
 
-                        subreddit = reddit.subreddit(subreddit_name)
+                        subreddit = reddits.subreddit(subreddit_name)
                         submission = subreddit.submit(
                         title='This is for testing purpose',
                         url='https://mutiplatformsvideosupload.net/video/TESTING2%20-%20demo_MoLoNlD.mp4'

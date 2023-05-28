@@ -4,7 +4,7 @@ import prawcore
 
 client_id='MpVe0s7TUeAjMj9UVJbO-g'
 client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-redirect_uri = 'http://18.223.209.108/uploadvideofile/upload/'
+redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
 access_token_url = 'https://www.reddit.com/api/v1/access_token'
 
 reddit = praw.Reddit(
