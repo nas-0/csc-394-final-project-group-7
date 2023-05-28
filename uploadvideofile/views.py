@@ -194,14 +194,23 @@ def upload(request):
                         return redirect('authorize_reddit')
                     
 
-            
-                    subreddit = reddit.subreddit(subreddit_name)
-                    submission = subreddit.submit(
-                    title='This is for testing purpose',
-                    url='https://mutiplatformsvideosupload.net/video/TESTING2%20-%20demo_MoLoNlD.mp4'
+                    try:
+                        reddits = praw.Reddit(
+                        client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                        client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                        redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
+                        access_token=request.session.get('access_token')
                 )
-                    context['message'] = 'Video posted successfully on Reddit!'
-                
+
+                        subreddit = reddits.subreddit(subreddit_name)
+                        submission = subreddit.submit(
+                        title='This is for testing purpose',
+                        url='https://mutiplatformsvideosupload.net/video/TESTING2%20-%20demo_MoLoNlD.mp4'
+                )
+                        context['message'] = 'Video posted successfully on Reddit!'
+                    except praw.exceptions.APIException as e:
+                        context['error'] = f'Error posting the video on Reddit: {e}'
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
 
