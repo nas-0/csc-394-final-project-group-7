@@ -204,6 +204,7 @@ def upload(request):
                             return redirect('http://18.223.209.108/uploadvideofile/upload/')
                         else:
                             context['error'] = f'Error posting the video on Reddit: {response.json()}'
+                            return redirect('http://18.223.209.108/uploadvideofile/upload/')
                     except Exception as e:
                         context['error'] = f'Error posting the video on Reddit: {str(e)}'
 
