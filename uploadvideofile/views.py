@@ -133,7 +133,7 @@ def reddit_callback(request):
         # Save the access_token to use it for authenticated API requests
 
         # Redirect the user to the desired page
-        return redirect('http://18.223.209.108/uploadvideofile/upload/reddit_callback/')
+        return redirect('http://18.223.209.108/uploadvideofile/reddit_callback/')
 
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
@@ -173,7 +173,7 @@ def upload(request):
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
-                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/reddit_callback/'
+                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
                 )
                     if not reddit.read_only:
                     # Redirect the user to authorize Reddit if they haven't authorized yet
@@ -187,7 +187,7 @@ def upload(request):
                     reddits = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                    redirect_uri='http://18.223.209.108/uploadvideofile/upload/reddit_callback/',
+                    redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
                     user_agent='softwares testing/1.0.0 (by /u/ForsoftwareTesting)',
                     access_token=access_token  # Pass the access token directly
                         )
