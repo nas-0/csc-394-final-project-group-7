@@ -176,6 +176,9 @@ def upload(request):
                 video_link = context ['url']
                 subreddit_name = 'testingapi32'         
                 try:
+                    access_token = request.session.get('access_token')
+                    if not access_token:
+                        return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
@@ -184,29 +187,12 @@ def upload(request):
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
                 )
                     
-                    access_token = request.session.get('access_token')
-                    if not access_token:
-                        return redirect('authorize_reddit')
+                    subreddit = reddit.subreddit(subreddit_name)
+                    title = request.POST.get('title')
                     
-                    try:
-                        headers = {'Authorization': f'Bearer {access_token}'}
-                        data = {
-                    'title': 'This is for testing purpose',
-                    'url': video_link,
-                    'sr': subreddit_name,
-                    'kind': 'link'
-                    }
-                        response = requests.post('https://oauth.reddit.com/api/submit', headers=headers, data=data)
-
-                        if response.status_code == 200:
-                            context['message'] = 'Video posted successfully on Reddit!'
-                            return redirect('http://18.223.209.108/uploadvideofile/upload/')
-                        else:
-                            context['error'] = f'Error posting the video on Reddit: {response.json()}'
-                            return redirect('http://18.223.209.108/uploadvideofile/upload/')
-                    except Exception as e:
-                        context['error'] = f'Error posting the video on Reddit: {str(e)}'
-
+                    submission = subreddit.submit(title=title, url=video_link)
+        
+                   
                     
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
