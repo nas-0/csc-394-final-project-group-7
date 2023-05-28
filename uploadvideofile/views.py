@@ -175,8 +175,9 @@ def upload(request):
                 
                 video_link = context ['url']
                 request.session['video_link'] = video_link
+                subreddit_name = 'testingapi32' 
                 try:
-                    subreddit_name = 'testingapi32' 
+                    
                     reddit = praw.Reddit(
                     client_id='MpVe0s7TUeAjMj9UVJbO-g',
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
@@ -195,23 +196,24 @@ def upload(request):
                     
 
                     try:
-                        reddits = praw.Reddit(
-                        client_id='MpVe0s7TUeAjMj9UVJbO-g',
-                        client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                        user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
-                        redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/',
-                        access_token=access_token
-                )
+                        access_token = request.session.get('access_token')
+                        headers = {'Authorization': f'Bearer {access_token}'}
+                        data = {
+                    'title': 'This is for testing purpose',
+                    'url': video_link,
+                    'sr': subreddit_name,
+                    'kind': 'link'
+                    }
+                        response = requests.post('https://oauth.reddit.com/api/submit', headers=headers, data=data)
 
-                        subreddit = reddits.subreddit(subreddit_name)
-                        title = request.POST.get('title')
-                        submission = subreddit.submit(
-                        title=title,
-                        url=video_link,
-                )
-                        context['message'] = 'Video posted successfully on Reddit!'
-                    except praw.exceptions.APIException as e:
-                        context['error'] = f'Error posting the video on Reddit: {e}'
+                        if response.status_code == 200:
+                            context['message'] = 'Video posted successfully on Reddit!'
+                        else:
+                            context['error'] = f'Error posting the video on Reddit: {response.json()}'
+                    except Exception as e:
+                        context['error'] = f'Error posting the video on Reddit: {str(e)}'
+
+                    
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
 
