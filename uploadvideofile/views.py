@@ -65,7 +65,7 @@ def edituploader(request):
 def authorize_reddit(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     
     # Create a Reddit instance
     reddit = praw.Reddit(
