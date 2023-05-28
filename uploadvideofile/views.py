@@ -184,16 +184,11 @@ def upload(request):
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
                 )
-                    if not reddit.read_only:
                     
-                        return redirect('authorize_reddit')
-
-                 
                     access_token = request.session.get('access_token')
                     if not access_token:
                         return redirect('authorize_reddit')
                     
-
                     try:
                         headers = {'Authorization': f'Bearer {access_token}'}
                         data = {
