@@ -82,6 +82,7 @@ def authorize_reddit(request):
         state=state,
         duration='permanent'
     )
+    request.session['state'] = state
     
     # Redirect the user to the authorization URL
     return redirect(auth_url)
