@@ -23,7 +23,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from .facebook_scripts.fb_upload_script import post_to_facebook
 from praw.exceptions import APIException
-
+import secrets
 import praw
 
 
@@ -64,21 +64,20 @@ def edituploader(request):
 
 def authorize_reddit(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
-    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     
     # Create a Reddit instance
     reddit = praw.Reddit(
         client_id=client_id,
-        client_secret=client_secret,
         redirect_uri=redirect_uri,
         user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
     )
+    state = secrets.token_urlsafe(16)
     
     # Generate the authorization URL
     auth_url = reddit.auth.url(
         scopes=['identity', 'read', 'submit'],
-        state='YOUR_STATE',
+        state=state,
         duration='permanent'
     )
     
@@ -118,6 +117,13 @@ def reddit_callback(request):
 
     # Retrieve the authorization code from the query parameters
     authorization_code = request.GET.get('code')
+
+    received_state = request.GET.get('state')
+
+    stored_state = request.session.get('state')
+
+    if received_state != stored_state:
+        return redirect('http://18.223.209.108/uploadvideofile/')
 
     try:
         # Create a Reddit instance
