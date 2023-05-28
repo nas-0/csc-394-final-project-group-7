@@ -113,7 +113,7 @@ def callback_view(request):
 def reddit_callback(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
 
     # Retrieve the authorization code from the query parameters
     authorization_code = request.GET.get('code')
