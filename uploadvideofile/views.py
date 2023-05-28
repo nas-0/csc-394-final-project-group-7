@@ -185,11 +185,12 @@ def upload(request):
                     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                     redirect_uri='http://18.223.209.108/uploadvideofile/reddit_callback/'
+                    access_token=access_token
                 )
                     
                     subreddit = reddit.subreddit(subreddit_name)
                     title = request.POST.get('title')
-                    
+
                     submission = subreddit.submit(title=title, url=video_link)
         
                    
