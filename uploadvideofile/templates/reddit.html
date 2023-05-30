@@ -101,7 +101,6 @@
         <a class="nav-link" href="/uploadvideofile/reddit">Reddit</a>
         <a class="nav-link" href="/uploadvideofile/facebook">Facebook</a>
         <a class="nav-link" href="/uploadvideofile/database">Database</a>
-        <a class="nav-link" href="/uploadvideofile/aboutme">About Us</a>
         {% if user.is_authenticated %}
           <a class="nav-link" href="/uploadvideofile/edituploader">Edit Socials</a>
           <a class="nav-link" href="{% url 'logout' %}">Log out</a>
@@ -126,7 +125,7 @@
   {% endfor %}
 
   <div class="upload-form">
-    <h2>Upload to Reddits</h2>
+    <h2>Upload to Reddit</h2>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <label for="{{ form.video.id_for_label }}">Video File:</label>
