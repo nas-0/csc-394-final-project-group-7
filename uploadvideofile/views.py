@@ -124,10 +124,6 @@ def database(request):
     return render(request,'database.html', {'form': form, 'context': context}) #context)
      
 def callback_view(request):
-    error = request.GET.get('error')
-    if error:
-        # Redirect the user to your custom error page
-        return render(request, 'upload_error.html')
     code = request.GET.get('code')
     client_id='VhmckEe4MW5dA-b5p2IriQ'
     client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
@@ -264,8 +260,9 @@ def facebook(request):
 
 def reddit_callback(request):
     error = request.GET.get('error')
-    if error == 'access_denied':
-        return render(request, "upload_error.html")
+    if error:
+        # Redirect the user to your custom error page
+        return render(request, 'upload_error.html')
     
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
