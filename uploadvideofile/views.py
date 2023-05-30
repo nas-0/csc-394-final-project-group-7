@@ -64,29 +64,35 @@ def edituploader(request):
     return render(request,'edituploader.html', {'form': form}) #context)
 
 def authorize_reddit(request):
-    client_id='MpVe0s7TUeAjMj9UVJbO-g'
-    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
+    try:
+        client_id='MpVe0s7TUeAjMj9UVJbO-g'
+        client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
+        redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     
     # Create a Reddit instance
-    reddit = praw.Reddit(
+        reddit = praw.Reddit(
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
         user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
     )
-    state = secrets.token_urlsafe(16)
+        state = secrets.token_urlsafe(16)
     
     # Generate the authorization URL
-    auth_url = reddit.auth.url(
+        auth_url = reddit.auth.url(
         scopes=['identity', 'read', 'submit'],
         state=state,
         duration='permanent'
     )
-    request.session['state'] = state
+        request.session['state'] = state
     
     # Redirect the user to the authorization URL
-    return redirect(auth_url)
+        return redirect(auth_url)
+    except APIException as e:
+        return render(request, "upload_error.html")
+    
+def error_page(request):
+    return render(request, "upload_error.html")
 
 @login_required
 def database(request):
@@ -134,7 +140,7 @@ def callback_view(request):
         'code': code,
         'redirect_uri': redirect_uri
         },
-    auth=(client_id, client_secret)
+        auth=(client_id, client_secret)
     )
     access_token = response.json().get('access_token')
 
@@ -142,9 +148,11 @@ def callback_view(request):
     request.session['access_token'] = access_token
 
     # Redirect the user to the upload page or any other desired page
-    return redirect('http://18.223.209.108/uploadvideofile/upload/')
+    return redirect('http://18.223.209.108/uploadvideofile/')
+    
 
 @login_required
+#this for uploading video to reddit
 def reddit(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
@@ -237,11 +245,13 @@ def facebook(request):
                     return render(request, 'upload_success.html')
                 except:
                     return render(request, 'upload_error.html')
+    
 
             # return redirect('/uploadvideofile/videos')
             # return redirect('/uploadvideofile/facebook')
             messages.error(request, 'Please upload an .mp4 file and try again.')
             return redirect('/uploadvideofile/facebook')
+            
             # return render(request, 'facebook.html', {'message': "Please upload a video file"})
 
     else:
@@ -250,6 +260,11 @@ def facebook(request):
 
 
 def reddit_callback(request):
+    error = request.GET.get('error')
+    if error:
+        # Redirect the user to your custom error page
+        return render(request, "accessdenied.html")
+    
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
@@ -280,16 +295,15 @@ def reddit_callback(request):
         # Save the access_token to use it for authenticated API requests
 
         # Redirect the user to the desired page
-        return redirect('http://18.223.209.108/uploadvideofile/upload/')
+        return redirect('http://18.223.209.108/uploadvideofile/')
 
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
         # Redirect the user to an error page or display an error message
-        return redirect('YOUR_ERROR_URL')
+        return render(request, "upload_error.html")
     
     # except:
     #      return render(request, "upload_error.html") 
-
 
 
 @login_required

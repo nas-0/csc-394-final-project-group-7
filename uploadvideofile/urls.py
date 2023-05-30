@@ -3,6 +3,7 @@ from django.conf.urls import include
 from .views import authorize_reddit
 from .views import reddit_callback
 from . import views
+from .views import error_page
 
 
 from .views import SignUpView
@@ -17,6 +18,7 @@ urlpatterns = [
    
     path("reddit/", views.reddit, name="reddit"),
     path("facebook/", views.facebook, name="facebook"),
+ 
 
     path("edituploader/", views.edituploader, name="edituploader"),
 
