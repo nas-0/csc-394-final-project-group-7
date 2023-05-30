@@ -188,11 +188,17 @@ def reddit(request):
                     
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
-                    return redirect('/uploadvideofile/upload/')
+                    #fail
+                    # return redirect('/uploadvideofile/upload/')
+                    return render(request, 'upload_error.html')
                 
-                return redirect('/uploadvideofile/videos')
+                #success
+                return render(request, 'upload_success.html')
+                # return redirect('/uploadvideofile/videos')
             
-            form.save()
+            # form.save()
+            messages.error(request, 'Please upload an .mp4 file and try again.')
+            return redirect('/uploadvideofile/reddit')
     else:
         form = UploadForm()
     return render(request,'reddit.html', {'form': form, 'context': context}) #context)
@@ -328,19 +334,23 @@ def upload(request):
 
                     try:
                         post_to_facebook(title, desc, a_key, fpath)
+                        return render(request, 'upload_success.html')
                     except:
                          return render(request, 'upload_error.html')
         
                    
-                    
+                   
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
-                    return redirect('http://18.223.209.108/uploadvideofile/upload/')
+                    # return redirect('http://18.223.209.108/uploadvideofile/upload/')
+                    return render(request, 'upload_error.html')
 
-
-
-            return redirect('/uploadvideofile/videos')
-            form.save()
+            else:
+                messages.error(request, 'Please upload an .mp4 file and try again.')
+                return redirect('/uploadvideofile/upload')
+            
+            # return redirect('/uploadvideofile/videos')
+            # form.save()
     else:
         form = UploadForm()
     return render(request,'upload.html', {'form': form, 'context': context}) #context)
