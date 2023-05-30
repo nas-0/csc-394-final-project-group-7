@@ -121,30 +121,33 @@ def database(request):
     return render(request,'database.html', {'form': form, 'context': context}) #context)
      
 def callback_view(request):
-    code = request.GET.get('code')
-    client_id='VhmckEe4MW5dA-b5p2IriQ'
-    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
-    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
-    access_token_url = 'https://www.reddit.com/api/v1/access_token'
-    headers = {'User-Agent': ''}
+    try: 
+        code = request.GET.get('code')
+        client_id='VhmckEe4MW5dA-b5p2IriQ'
+        client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
+        redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
+        access_token_url = 'https://www.reddit.com/api/v1/access_token'
+        headers = {'User-Agent': ''}
 
-    response = requests.post(
-    access_token_url,
-    headers=headers,
-    data={
+        response = requests.post(
+        access_token_url,
+        headers=headers,
+        data={
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': redirect_uri
         },
-    auth=(client_id, client_secret)
+        auth=(client_id, client_secret)
     )
-    access_token = response.json().get('access_token')
+        access_token = response.json().get('access_token')
 
     # Store the access token securely (e.g., in the user's session)
-    request.session['access_token'] = access_token
+        request.session['access_token'] = access_token
 
     # Redirect the user to the upload page or any other desired page
-    return redirect('http://18.223.209.108/uploadvideofile/')
+        return redirect('http://18.223.209.108/uploadvideofile/')
+    except:
+        return render(request, "upload_error.html")
 
 @login_required
 #this for uploading video to reddit
@@ -288,7 +291,7 @@ def reddit_callback(request):
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
         # Redirect the user to an error page or display an error message
-        return redirect('upload_error.html')
+        return render(request, "upload_error.html")
     
     # except:
     #      return render(request, "upload_error.html") 
