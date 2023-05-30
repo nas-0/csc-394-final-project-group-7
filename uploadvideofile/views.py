@@ -88,7 +88,7 @@ def authorize_reddit(request):
     
     # Redirect the user to the authorization URL
         return redirect(auth_url)
-    except:
+    except APIException as e:
         return render(request, "upload_error.html")
 
 @login_required
@@ -146,7 +146,7 @@ def callback_view(request):
 
     # Redirect the user to the upload page or any other desired page
         return redirect('http://18.223.209.108/uploadvideofile/')
-    except:
+    except APIException as e:
         return render(request, "upload_error.html")
 
 @login_required
