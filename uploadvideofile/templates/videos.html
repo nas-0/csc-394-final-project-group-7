@@ -114,10 +114,19 @@
   </div>
 </nav>
 
-<h1> welcome to your videos!</h1>
+<h1> Welcome to your videos {{user}}!</h1>
+<table border='1'>
+  <tr>
+    <th>Video</th>
+    <th>Description</th>
+  </tr>
+  {% for x in videos %}
+  <tr>
+    <td><a href="/video/{{ x.video }}">{{ x.title }}</a></td>
+    <td> {{ x.description }}</td>
+  </tr>
+  {% endfor %}
+</table>
 
-{% for x in videos %}
-<tr>
-  <td>{{ x }}</td>
-</tr>
-{% endfor %}
+
+<!-- format of the video links are http://127.0.0.1:8000/video/videosdatabase/JasonTest.mp4 -->
