@@ -140,9 +140,10 @@ def callback_view(request):
     request.session['access_token'] = access_token
 
     # Redirect the user to the upload page or any other desired page
-    return redirect('http://18.223.209.108/uploadvideofile/upload/')
+    return redirect('http://18.223.209.108/uploadvideofile/')
 
 @login_required
+#this for uploading video to reddit
 def reddit(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
@@ -278,7 +279,7 @@ def reddit_callback(request):
         # Save the access_token to use it for authenticated API requests
 
         # Redirect the user to the desired page
-        return redirect('http://18.223.209.108/uploadvideofile/upload/')
+        return redirect('http://18.223.209.108/uploadvideofile/')
 
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
