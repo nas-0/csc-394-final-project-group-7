@@ -113,7 +113,48 @@ def callback_view(request):
     # Redirect the user to the upload page or any other desired page
     return redirect('http://18.223.209.108/uploadvideofile/upload/')
 def reddit(request):
-    return render(request, 'reddit.html')
+    form = UploadForm(request.POST, request.FILES)
+    context={}
+    form = UploadForm(request.POST, request.FILES)
+    if request.method=='POST':
+
+            form = UploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.uploader = request.user
+                obj.save()
+                
+                uploaded_video_file = request.FILES["video"]
+                fs = FileSystemStorage()
+                file_name = uploaded_video_file.name
+                name = fs.save(uploaded_video_file.name, uploaded_video_file)
+                context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
+                form = UploadForm(request.POST, request.FILES)
+                
+                video_link = context ['url']
+                subreddit_name = 'testingapi32'         
+                try:
+                    access_token = request.session.get('access_token')
+                    if not access_token:
+                        return redirect('authorize_reddit')
+                    
+                    reddit = praw.Reddit(
+                    client_id='MpVe0s7TUeAjMj9UVJbO-g',
+                    client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
+                    refresh_token=access_token,
+                    user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
+                )
+                    
+                    subreddit = reddit.subreddit(subreddit_name)
+                    title = request.POST.get('title')
+
+                    submission = subreddit.submit(title=title, url=video_link)
+        
+                   
+                    
+                except APIException as e:
+                    context['error'] = f'Error posting the video on Reddit: {e}'
+                    return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
 def facebook(request):
     return render(request, 'facebook.html')
