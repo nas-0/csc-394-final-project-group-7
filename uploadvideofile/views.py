@@ -107,12 +107,13 @@ def database(request):
                 name = fs.save(uploaded_video_file.name, uploaded_video_file)
                 context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
                 form = UploadForm(request.POST, request.FILES)
-                
                 video_link = context ['url']
+
             else:
                 messages.error(request, 'Please upload an .mp4 file and try again.')
                 return redirect('/uploadvideofile/database')
-           
+            
+            return render(request, 'upload_success.html')   
     else:
         form = UploadForm()
     return render(request,'database.html', {'form': form, 'context': context}) #context)
