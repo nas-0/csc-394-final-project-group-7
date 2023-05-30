@@ -112,6 +112,11 @@ def callback_view(request):
 
     # Redirect the user to the upload page or any other desired page
     return redirect('http://18.223.209.108/uploadvideofile/upload/')
+def reddit(request):
+    return render(request, 'reddit.html')
+
+def facebook(request):
+    return render(request, 'facebook.html')
 
 def reddit_callback(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
