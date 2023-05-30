@@ -111,7 +111,7 @@ def database(request):
            
     else:
         form = UploadForm()
-    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+    return render(request,'database.html', {'form': form, 'context': context}) #context)
      
 def callback_view(request):
     code = request.GET.get('code')
@@ -185,7 +185,7 @@ def reddit(request):
             form.save()
     else:
         form = UploadForm()
-    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+    return render(request,'reddit.html', {'form': form, 'context': context}) #context)
                 
                 
 
@@ -219,7 +219,7 @@ def facebook(request):
             return redirect('/uploadvideofile/videos')
     else:
         form = UploadForm()
-    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+    return render(request,'facebook.html', {'form': form, 'context': context}) #context)
 
 
 def reddit_callback(request):
