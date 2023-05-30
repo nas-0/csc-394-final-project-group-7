@@ -41,7 +41,7 @@ def index(request):
 
 @login_required
 def videos(request):
-    medias = Media.objects.filter(uploader=request.user).values_list('video')
+    medias = Media.objects.filter(uploader=request.user)
     template = loader.get_template('videos.html')
     context = {
     'videos': medias,
