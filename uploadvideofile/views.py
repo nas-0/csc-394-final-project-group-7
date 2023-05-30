@@ -262,7 +262,7 @@ def reddit_callback(request):
     error = request.GET.get('error')
     if error:
         # Redirect the user to your custom error page
-        return render(request, 'upload_error.html')
+        return redirect('http://')
     
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
