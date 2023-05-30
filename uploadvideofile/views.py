@@ -164,7 +164,37 @@ def reddit(request):
                 
 
 def facebook(request):
-    return render(request, 'facebook.html')
+    form = UploadForm(request.POST, request.FILES)
+    context={}
+    form = UploadForm(request.POST, request.FILES)
+    if request.method=='POST':
+
+            form = UploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.uploader = request.user
+                obj.save()
+                
+                uploaded_video_file = request.FILES["video"]
+                fs = FileSystemStorage()
+                file_name = uploaded_video_file.name
+                name = fs.save(uploaded_video_file.name, uploaded_video_file)
+                context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
+                form = UploadForm(request.POST, request.FILES)
+                
+                video_link = context ['url']
+                title = request.POST.get('title')
+                a_key=Uploader.fb_access_key
+                fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+                desc= request.POST.get('description')
+
+                post_to_facebook(title, desc, a_key, fpath)
+
+            return redirect('/uploadvideofile/videos')
+    else:
+        form = UploadForm()
+    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+
 
 def reddit_callback(request):
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
@@ -251,32 +281,6 @@ def upload(request):
                     context['error'] = f'Error posting the video on Reddit: {e}'
                     return redirect('http://18.223.209.108/uploadvideofile/upload/')
 
-                #access_token = request.session.get('access_token')
-                #reddit = praw.Reddit(client_id='MpVe0s7TUeAjMj9UVJbO-g',
-                        #client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg',
-                        #username='softwaretesting7',
-                        #password='Software7',
-                        #user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)")
-                # create a Reddit instance by providing the required credentials
-
-
-                # define the subreddit where you want to upload the video
-                #subreddit_name = 'testingapi32'
-                #subreddit = reddit.subreddit(subreddit_name)
-
-                # define the video link and the title of the post
-                #video_link = context ['url']
-                #title = request.POST.get('title')
-
-                # create the submission object
-                #submission = subreddit.submit(title=title, url=video_link)
-
-                # print the link to the newly created post
-                #print(submission.url)
-                #desc= request.POST.get('description')
-                #a_key=''
-                #fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
-                #post_to_facebook(title, desc, a_key, fpath)
 
 
             return redirect('/uploadvideofile/videos')
