@@ -257,7 +257,7 @@ def upload(request):
                 form = UploadForm(request.POST, request.FILES)
                 
                 video_link = context ['url']
-                subreddit_name = 'testingapi32'         
+                        
                 try:
                     access_token = request.session.get('access_token')
                     if not access_token:
@@ -269,11 +269,16 @@ def upload(request):
                     refresh_token=access_token,
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                 )
-                    
+                    subreddit_name=Uploader.objects.get(user=request.user).subreddit
                     subreddit = reddit.subreddit(subreddit_name)
                     title = request.POST.get('title')
 
                     submission = subreddit.submit(title=title, url=video_link)
+                    a_key=Uploader.objects.get(user=request.user).fb_access_key
+                    fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+                    desc= request.POST.get('description')
+
+                    post_to_facebook(title, desc, a_key, fpath)
         
                    
                     
