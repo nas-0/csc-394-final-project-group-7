@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Database Upload</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    body {
+      background-color: #fff;
+      color: #000;
+      font-family: 'Roboto', sans-serif;
+    }
+  
+    .upload-form {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      background-color: #f8f8f8;
+    }
+  
+    label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+  
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  
+    button[type="submit"] {
+      background-color: #000;
+      border-radius: 3px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.5rem;
+      transition: background-color 0.3s ease-in-out;
+    }
+  
+    button[type="submit"]:hover {
+      background-color: #333;
+    }
+  
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      background-color: #000;
+      color: #fff;
+    }
+  
+    .navbar-brand {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  
+    .navbar-nav {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 1rem;
+      margin-right: 2rem;
+      font-size: 2rem;
+    }
+  
+    .nav-link:hover,
+    .nav-link.active {
+      color: #000;
+      background-color: #fff;
+    }
+
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/uploadvideofile">Home</a>
+        <a class="nav-link" href="/uploadvideofile/videos">Videos</a>
+        <a class="nav-link" href="/uploadvideofile/upload">Upload</a>
+        <a class="nav-link" href="/uploadvideofile/reddit">Reddit</a>
+        <a class="nav-link" href="/uploadvideofile/facebook">Facebook</a>
+        {% if user.is_authenticated %}
+          <a class="nav-link" href="/uploadvideofile/edituploader">Edit Socials</a>
+          <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+        {% else %}
+          <a class="nav-link" href="/accounts/login">Login</a>
+          <a class="nav-link" href="/uploadvideofile/signup">Create an Account</a>
+        {% endif %}
+        
+
+      </div>
+    </div>
+  </div>
+</nav>
+</head>
+
+<body>
+  <div class="upload-form">
+    <h2>Database upload</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="{{ form.video.id_for_label }}">Video File:</label>
+      {{ form.video }}
+      <label for="{{ form.video_id.id_for_label }}">Video ID:</label>
+      {{ form.video_id }}
+      <label for="{{ form.title.id_for_label }}">Title:</label>
+      {{ form.title }}
+      <label for="{{ form.description.id_for_label }}">Description:</label>
+      {{ form.description }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+
+  <script>
+    const tabs = document.querySelectorAll(".nav a");
+    const content = document.querySelectorAll(".content .tab");
+
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener("click", function (e) {
+        e.preventDefault();
+        const activeTab = document.querySelector(".nav a.active");
+        const activeContent = document.querySelector(".content .tab.active");
+        activeTab.classList.remove("active");
+        activeContent.classList.remove("active");
+        tabs[i].classList.add("active");
+        content[i].classList.add("active");
+      });
+    }
+  </script>
+
+</body>
+

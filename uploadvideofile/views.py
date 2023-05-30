@@ -87,6 +87,32 @@ def authorize_reddit(request):
     # Redirect the user to the authorization URL
     return redirect(auth_url)
 
+def database(request):
+    form = UploadForm(request.POST, request.FILES)
+    context={}
+    form = UploadForm(request.POST, request.FILES)
+    if request.method=='POST':
+
+            form = UploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.uploader = request.user
+                obj.save()
+                
+                uploaded_video_file = request.FILES["video"]
+                fs = FileSystemStorage()
+                file_name = uploaded_video_file.name
+                name = fs.save(uploaded_video_file.name, uploaded_video_file)
+                context ['url'] = "https://mutiplatformsvideosupload.net"+fs.url(name)
+                form = UploadForm(request.POST, request.FILES)
+                
+                video_link = context ['url']
+            return redirect('/uploadvideofile/videos')
+           
+    else:
+        form = UploadForm()
+    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+     
 def callback_view(request):
     code = request.GET.get('code')
     client_id='VhmckEe4MW5dA-b5p2IriQ'
