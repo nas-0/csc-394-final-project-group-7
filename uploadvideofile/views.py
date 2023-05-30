@@ -121,33 +121,35 @@ def database(request):
     return render(request,'database.html', {'form': form, 'context': context}) #context)
      
 def callback_view(request):
-    try: 
-        code = request.GET.get('code')
-        client_id='VhmckEe4MW5dA-b5p2IriQ'
-        client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
-        redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
-        access_token_url = 'https://www.reddit.com/api/v1/access_token'
-        headers = {'User-Agent': ''}
+    error = request.GET.get('error')
+    if error:
+        # Redirect the user to your custom error page
+        return render(request, 'upload_error.html')
+    code = request.GET.get('code')
+    client_id='VhmckEe4MW5dA-b5p2IriQ'
+    client_secret='AXqknNGBxgmvZ9e7VnvyQzitz8NIgg'
+    redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
+    access_token_url = 'https://www.reddit.com/api/v1/access_token'
+    headers = {'User-Agent': ''}
 
-        response = requests.post(
-        access_token_url,
-        headers=headers,
-        data={
+    response = requests.post(
+    access_token_url,
+    headers=headers,
+    data={
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': redirect_uri
         },
         auth=(client_id, client_secret)
     )
-        access_token = response.json().get('access_token')
+    access_token = response.json().get('access_token')
 
     # Store the access token securely (e.g., in the user's session)
-        request.session['access_token'] = access_token
+    request.session['access_token'] = access_token
 
     # Redirect the user to the upload page or any other desired page
-        return redirect('http://18.223.209.108/uploadvideofile/')
-    except APIException as e:
-        return render(request, "upload_error.html")
+    return redirect('http://18.223.209.108/uploadvideofile/')
+    
 
 @login_required
 #this for uploading video to reddit
@@ -243,11 +245,13 @@ def facebook(request):
                     return render(request, 'upload_success.html')
                 except:
                     return render(request, 'upload_error.html')
+    
 
             # return redirect('/uploadvideofile/videos')
             # return redirect('/uploadvideofile/facebook')
             messages.error(request, 'Please upload an .mp4 file and try again.')
             return redirect('/uploadvideofile/facebook')
+            
             # return render(request, 'facebook.html', {'message': "Please upload a video file"})
 
     else:
