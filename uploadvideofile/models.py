@@ -11,7 +11,7 @@ from django.db.models.signals import post_save
 class Uploader(models.Model):
     name = models.CharField(blank=True, max_length=30)
     subreddit = models.CharField(blank=True, max_length=30)
-    fb_access_key = models.CharField(blank=True, max_length=100)
+    fb_access_key = models.CharField(blank=True, max_length=500)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=False)
 
     def __str__(self) -> str:
