@@ -9,6 +9,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.contrib import messages
 
 from uploadvideofile.models import Media, Uploader
 from uploadvideofile.forms import UploadForm, UploaderForm
@@ -87,6 +88,7 @@ def authorize_reddit(request):
     # Redirect the user to the authorization URL
     return redirect(auth_url)
 
+@login_required
 def database(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
@@ -107,7 +109,8 @@ def database(request):
                 form = UploadForm(request.POST, request.FILES)
                 
                 video_link = context ['url']
-            return redirect('/uploadvideofile/videos')
+            messages.error(request, 'Please upload an .mp4 file and try again.')
+            return redirect('/uploadvideofile/database')
            
     else:
         form = UploadForm()
@@ -138,6 +141,8 @@ def callback_view(request):
 
     # Redirect the user to the upload page or any other desired page
     return redirect('http://18.223.209.108/uploadvideofile/upload/')
+
+@login_required
 def reddit(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
@@ -170,8 +175,11 @@ def reddit(request):
                     refresh_token=access_token,
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                 )
-                    subreddit_name=Uploader.objects.get(user=request.user).subreddit
-                    subreddit = reddit.subreddit(subreddit_name)
+                    try:
+                        subreddit_name=Uploader.objects.get(user=request.user).subreddit
+                        subreddit = reddit.subreddit(subreddit_name)
+                    except:
+                        return render(request, 'upload_error.html')
                     title = request.POST.get('title')
 
                     submission = subreddit.submit(title=title, url=video_link)
@@ -180,15 +188,17 @@ def reddit(request):
                     
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
-                    return redirect('http://18.223.209.108/uploadvideofile/upload/')
+                    return redirect('/uploadvideofile/upload/')
+                
                 return redirect('/uploadvideofile/videos')
+            
             form.save()
     else:
         form = UploadForm()
     return render(request,'reddit.html', {'form': form, 'context': context}) #context)
                 
                 
-
+@login_required
 def facebook(request):
     form = UploadForm(request.POST, request.FILES)
     context={}
@@ -211,12 +221,21 @@ def facebook(request):
                 video_link = context ['url']
                 title = request.POST.get('title')
                 a_key=Uploader.objects.get(user=request.user).fb_access_key
-                fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+                fpath='uploadvideofile/videosdatabase/'+file_name
                 desc= request.POST.get('description')
 
-                post_to_facebook(title, desc, a_key, fpath)
+                try:
+                    post_to_facebook(title, desc, a_key, fpath)
+                    return render(request, 'upload_success.html')
+                except:
+                    return render(request, 'upload_error.html')
 
-            return redirect('/uploadvideofile/videos')
+            # return redirect('/uploadvideofile/videos')
+            # return redirect('/uploadvideofile/facebook')
+            messages.error(request, 'Please upload an .mp4 file and try again.')
+            return redirect('/uploadvideofile/facebook')
+            # return render(request, 'facebook.html', {'message': "Please upload a video file"})
+
     else:
         form = UploadForm()
     return render(request,'facebook.html', {'form': form, 'context': context}) #context)
@@ -258,7 +277,10 @@ def reddit_callback(request):
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
         # Redirect the user to an error page or display an error message
-        return redirect('YOUR_ERROR_URL') 
+        return redirect('YOUR_ERROR_URL')
+    
+    # except:
+    #      return render(request, "upload_error.html") 
 
 
 
@@ -301,10 +323,13 @@ def upload(request):
 
                     submission = subreddit.submit(title=title, url=video_link)
                     a_key=Uploader.objects.get(user=request.user).fb_access_key
-                    fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
+                    fpath='uploadvideofile/videosdatabase/'+file_name
                     desc= request.POST.get('description')
 
-                    post_to_facebook(title, desc, a_key, fpath)
+                    try:
+                        post_to_facebook(title, desc, a_key, fpath)
+                    except:
+                         return render(request, 'upload_error.html')
         
                    
                     
@@ -319,4 +344,7 @@ def upload(request):
     else:
         form = UploadForm()
     return render(request,'upload.html', {'form': form, 'context': context}) #context)
-        
+
+#Redirects 404 error to custom template        
+def page_not_found_error(request, exception):
+    return render(request, 'page_not_found.html')

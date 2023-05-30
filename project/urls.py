@@ -19,13 +19,18 @@ from django.urls import include, path
 from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import  static
+from django.shortcuts import redirect
+
+handler404 = 'uploadvideofile.views.page_not_found_error'
 
 urlpatterns = [
     
     path('fb/', include('fb.urls')),
     path("uploadvideofile/", include("uploadvideofile.urls")), 
     path('accounts/', include('django.contrib.auth.urls')),
-    path('admin/', admin.site.urls),]
+    path('admin/', admin.site.urls),
+    path('', lambda req: redirect('/uploadvideofile/')),
+    ]
 
 if  settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
