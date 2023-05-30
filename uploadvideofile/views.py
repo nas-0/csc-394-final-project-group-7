@@ -155,6 +155,13 @@ def reddit(request):
                 except APIException as e:
                     context['error'] = f'Error posting the video on Reddit: {e}'
                     return redirect('http://18.223.209.108/uploadvideofile/upload/')
+                return redirect('/uploadvideofile/videos')
+            form.save()
+    else:
+        form = UploadForm()
+    return render(request,'upload.html', {'form': form, 'context': context}) #context)
+                
+                
 
 def facebook(request):
     return render(request, 'facebook.html')
@@ -195,7 +202,7 @@ def reddit_callback(request):
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
         # Redirect the user to an error page or display an error message
-        return redirect('YOUR_ERROR_URL')
+        return redirect('YOUR_ERROR_URL') 
 
 
 
