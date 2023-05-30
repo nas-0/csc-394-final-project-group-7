@@ -17,7 +17,7 @@ urlpatterns = [
    
     path("reddit/", views.reddit, name="reddit"),
     path("facebook/", views.facebook, name="facebook"),
-    path("about/", views.about, name="about"),
+ 
 
     path("edituploader/", views.edituploader, name="edituploader"),
 

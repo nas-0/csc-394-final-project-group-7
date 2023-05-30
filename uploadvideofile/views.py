@@ -291,9 +291,6 @@ def reddit_callback(request):
     #      return render(request, "upload_error.html") 
 
 
-def about(request):
-    return render(request, 'about.html')
-
 @login_required
 def upload(request):
     form = UploadForm(request.POST, request.FILES)
