@@ -90,7 +90,8 @@ def authorize_reddit(request):
         return redirect(auth_url)
     except APIException as e:
         return render(request, "upload_error.html")
-
+def error_page(request):
+    return render(request, "upload_error.html")
 @login_required
 def database(request):
     form = UploadForm(request.POST, request.FILES)
@@ -260,6 +261,9 @@ def facebook(request):
 
 
 def reddit_callback(request):
+    error = request.GET.get('error')
+    if error == 'access_denied':
+        return render(request, "upload_error.html")
     client_id='MpVe0s7TUeAjMj9UVJbO-g'
     client_secret='owxGhaijKhQHeXnVkI77JbH1vhswSg'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'

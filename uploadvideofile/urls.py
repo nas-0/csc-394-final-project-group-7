@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('authorize_reddit/', authorize_reddit, name='authorize_reddit'),
 
-    path('reddit_callback/', reddit_callback, name='reddit_callback')
+    path('reddit_callback/', reddit_callback,error_page, name='reddit_callback')
     
 
     ]
