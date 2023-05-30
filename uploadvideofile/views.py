@@ -132,7 +132,7 @@ def reddit(request):
                 form = UploadForm(request.POST, request.FILES)
                 
                 video_link = context ['url']
-                subreddit_name = 'testingapi32'         
+                        
                 try:
                     access_token = request.session.get('access_token')
                     if not access_token:
@@ -144,7 +144,7 @@ def reddit(request):
                     refresh_token=access_token,
                     user_agent="softwares testing/1.0.0 (by /u/ForsoftwareTesting)",
                 )
-                    
+                    subreddit_name=Uploader.objects.get(user=request.user).subreddit
                     subreddit = reddit.subreddit(subreddit_name)
                     title = request.POST.get('title')
 
