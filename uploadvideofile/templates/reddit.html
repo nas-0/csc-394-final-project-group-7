@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Upload Video</title>
+  <title>Upload Reddit</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
   <style>
     * {
@@ -117,7 +117,7 @@
 
 <body>
   <div class="upload-form">
-    <h2>Upload Video</h2>
+    <h2>Upload to Reddit</h2>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <label for="{{ form.video.id_for_label }}">Video File:</label>
