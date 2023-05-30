@@ -10,4 +10,4 @@ class UploadForm(forms.ModelForm):
 class UploaderForm(forms.ModelForm):
     class Meta:
         model = Uploader
-        fields = ('name', 'reddit_user', 'reddit_password', 'fb_access_key',)
+        fields = ('name', 'subreddit', 'fb_access_key',)
