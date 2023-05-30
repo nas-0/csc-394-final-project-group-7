@@ -285,7 +285,7 @@ def reddit_callback(request):
     except praw.exceptions.PRAWException as e:
         # Handle any errors that occur during the authorization process
         # Redirect the user to an error page or display an error message
-        return redirect('YOUR_ERROR_URL')
+        return redirect('upload_error.html')
     
     # except:
     #      return render(request, "upload_error.html") 
