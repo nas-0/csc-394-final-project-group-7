@@ -184,7 +184,7 @@ def facebook(request):
                 
                 video_link = context ['url']
                 title = request.POST.get('title')
-                a_key=Uploader.fb_access_key
+                a_key=Uploader.objects.get(user=request.user).fb_access_key
                 fpath='/home/ubuntu/hw/uploadvideofile/videosdatabase/'+file_name
                 desc= request.POST.get('description')
 
