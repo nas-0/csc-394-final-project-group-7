@@ -74,7 +74,7 @@ def authorize_reddit(request):
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
-        user_agent="Softwareapp/1.0.0 (by /u/Software721)"
+        user_agent="Softwareapp/1.0.0 (by /u/Software721)",
     )
         state = secrets.token_urlsafe(16)
     
@@ -180,8 +180,8 @@ def reddit(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='vaVWVyZHtPBJApDzZbpAYg'
-                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg'
+                    client_id='vaVWVyZHtPBJApDzZbpAYg',
+                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg',
                     refresh_token=access_token,
                     user_agent="Softwareapp/1.0.0 (by /u/Software721)",
                 )
@@ -334,10 +334,10 @@ def upload(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='vaVWVyZHtPBJApDzZbpAYg'
-                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg'
+                    client_id='vaVWVyZHtPBJApDzZbpAYg',
+                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg',
                     refresh_token=access_token,
-                    user_agent="Softwareapp/1.0.0 (by /u/Software721)"
+                    user_agent="Softwareapp/1.0.0 (by /u/Software721)",
                 )
                     subreddit_name=Uploader.objects.get(user=request.user).subreddit
                     subreddit = reddit.subreddit(subreddit_name)
