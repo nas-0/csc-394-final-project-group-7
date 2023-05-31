@@ -65,8 +65,8 @@ def edituploader(request):
 
 def authorize_reddit(request):
     try:
-        client_id='X-KOveZKIF9nGIDVaEz5-Q'
-        client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
+        client_id='JahUzYZaq3nwkdib-97aEg',
+        client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
         redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     
     # Create a Reddit instance
@@ -126,8 +126,8 @@ def database(request):
      
 def callback_view(request):
     code = request.GET.get('code')
-    client_id='X-KOveZKIF9nGIDVaEz5-Q'
-    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
+    client_id='JahUzYZaq3nwkdib-97aEg',
+    client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     access_token_url = 'https://www.reddit.com/api/v1/access_token'
     headers = {'User-Agent': ''}
@@ -180,8 +180,8 @@ def reddit(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='X-KOveZKIF9nGIDVaEz5-Q',
-                    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA',
+                    client_id='JahUzYZaq3nwkdib-97aEg',
+                    client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
                     refresh_token=access_token,
                     user_agent="Softwareapp/1.0.0 (by /u/Software721)",
                 )
@@ -265,8 +265,8 @@ def reddit_callback(request):
         # Redirect the user to your custom error page
         return render(request, "accessdenied.html")
     
-    client_id='X-KOveZKIF9nGIDVaEz5-Q'
-    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
+    client_id='JahUzYZaq3nwkdib-97aEg',
+    client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
 
     # Retrieve the authorization code from the query parameters
@@ -285,7 +285,7 @@ def reddit_callback(request):
             client_id=client_id,
             client_secret=client_secret,
             redirect_uri=redirect_uri,
-            user_agent="Softwareapp/1.0.0 (by /u/Software721)"
+            user_agent="finaldemo/1.0.0 (by /u/finaldemo)"
         )
 
         # Exchange the authorization code for an access token
@@ -334,10 +334,10 @@ def upload(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='X-KOveZKIF9nGIDVaEz5-Q',
-                    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA',
+                    client_id='JahUzYZaq3nwkdib-97aEg',
+                    client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
                     refresh_token=access_token,
-                    user_agent="Softwareapp/1.0.0 (by /u/Software721)",
+                    user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
                 )
                     subreddit_name=Uploader.objects.get(user=request.user).subreddit
                     subreddit = reddit.subreddit(subreddit_name)
