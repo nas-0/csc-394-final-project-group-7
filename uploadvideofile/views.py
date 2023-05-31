@@ -118,7 +118,8 @@ def database(request):
             else:
                 messages.error(request, 'Please upload an .mp4 file and try again.')
                 return redirect('/uploadvideofile/database')
-           
+            
+            return render(request, 'upload_success.html')
     else:
         form = UploadForm()
     return render(request,'database.html', {'form': form, 'context': context}) #context)
