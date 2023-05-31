@@ -74,7 +74,7 @@ def authorize_reddit(request):
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
-        user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
+        user_agent="finaldemo/1.0.0 (by /u/Smurfing532)",
     )
         state = secrets.token_urlsafe(16)
     
@@ -183,7 +183,7 @@ def reddit(request):
                     client_id='JahUzYZaq3nwkdib-97aEg',
                     client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
                     refresh_token=access_token,
-                    user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
+                    user_agent="finaldemo/1.0.0 (by /u/Smurfing532)",
                 )
                     try:
                         subreddit_name=Uploader.objects.get(user=request.user).subreddit
@@ -285,7 +285,7 @@ def reddit_callback(request):
             client_id=client_id,
             client_secret=client_secret,
             redirect_uri=redirect_uri,
-            user_agent="finaldemo/1.0.0 (by /u/finaldemo)"
+            user_agent="finaldemo/1.0.0 (by /u/Smurfing532)"
         )
 
         # Exchange the authorization code for an access token
@@ -337,7 +337,7 @@ def upload(request):
                     client_id='JahUzYZaq3nwkdib-97aEg',
                     client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
                     refresh_token=access_token,
-                    user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
+                    user_agent="finaldemo/1.0.0 (by /u/Smurfing532)",
                 )
                     subreddit_name=Uploader.objects.get(user=request.user).subreddit
                     subreddit = reddit.subreddit(subreddit_name)
