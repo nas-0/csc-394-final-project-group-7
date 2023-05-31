@@ -65,8 +65,8 @@ def edituploader(request):
 
 def authorize_reddit(request):
     try:
-        client_id='vaVWVyZHtPBJApDzZbpAYg'
-        client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg'
+        client_id='X-KOveZKIF9nGIDVaEz5-Q'
+        client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
         redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     
     # Create a Reddit instance
@@ -126,8 +126,8 @@ def database(request):
      
 def callback_view(request):
     code = request.GET.get('code')
-    client_id='vaVWVyZHtPBJApDzZbpAYg'
-    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg'
+    client_id='X-KOveZKIF9nGIDVaEz5-Q'
+    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
     access_token_url = 'https://www.reddit.com/api/v1/access_token'
     headers = {'User-Agent': ''}
@@ -180,8 +180,8 @@ def reddit(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='vaVWVyZHtPBJApDzZbpAYg',
-                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg',
+                    client_id='X-KOveZKIF9nGIDVaEz5-Q',
+                    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA',
                     refresh_token=access_token,
                     user_agent="Softwareapp/1.0.0 (by /u/Software721)",
                 )
@@ -265,8 +265,8 @@ def reddit_callback(request):
         # Redirect the user to your custom error page
         return render(request, "accessdenied.html")
     
-    client_id='vaVWVyZHtPBJApDzZbpAYg'
-    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg'
+    client_id='X-KOveZKIF9nGIDVaEz5-Q'
+    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA'
     redirect_uri = 'http://18.223.209.108/uploadvideofile/reddit_callback/'
 
     # Retrieve the authorization code from the query parameters
@@ -334,8 +334,8 @@ def upload(request):
                         return redirect('authorize_reddit')
                     
                     reddit = praw.Reddit(
-                    client_id='vaVWVyZHtPBJApDzZbpAYg',
-                    client_secret='Fgs0icKuM-st0HDrjB_F4vMP1XaPHg',
+                    client_id='X-KOveZKIF9nGIDVaEz5-Q',
+                    client_secret='6QbP_nb06PlPt4QyWkGe5zeeeK84RA',
                     refresh_token=access_token,
                     user_agent="Softwareapp/1.0.0 (by /u/Software721)",
                 )
