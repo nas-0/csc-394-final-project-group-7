@@ -74,7 +74,7 @@ def authorize_reddit(request):
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
-        user_agent="Softwareapp/1.0.0 (by /u/Software721)",
+        user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
     )
         state = secrets.token_urlsafe(16)
     
@@ -183,7 +183,7 @@ def reddit(request):
                     client_id='JahUzYZaq3nwkdib-97aEg',
                     client_secret='YvRORsJdcAgeQ0ecgeKKxP3a8CrcIQ',
                     refresh_token=access_token,
-                    user_agent="Softwareapp/1.0.0 (by /u/Software721)",
+                    user_agent="finaldemo/1.0.0 (by /u/finaldemo)",
                 )
                     try:
                         subreddit_name=Uploader.objects.get(user=request.user).subreddit
